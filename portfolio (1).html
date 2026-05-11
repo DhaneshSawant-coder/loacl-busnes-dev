@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhanesh Sawant — Local Business Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Oswald:wght@400;500;600&family=Barlow:wght@300;400;500&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=Pacifico&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0d0d0b;--cream:#f5f0e8;--gold:#c9a84c;--rust:#a0522d;
+  --sage:#7a9e7e;--mist:#e8ede9;--slate:#2a2f3a;
+}
+body{font-family:'Outfit',sans-serif;overflow-x:hidden}
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* NAV BACK BUTTON */
+.back-btn{position:fixed;top:20px;left:20px;z-index:9999;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:8px 18px;font-family:'Outfit',sans-serif;font-size:13px;letter-spacing:.08em;cursor:pointer;border-radius:30px;transition:all .3s;display:none}
+.back-btn:hover{background:rgba(255,255,255,0.25)}
+.back-btn.dark{background:rgba(0,0,0,0.08);border-color:rgba(0,0,0,0.2);color:#333}
+.back-btn.dark:hover{background:rgba(0,0,0,0.15)}
+.back-btn.visible{display:block}
+
+/* ============================================================
+   PORTFOLIO HOME PAGE
+   ============================================================ */
+#portfolio{background:var(--ink);color:var(--cream)}
+
+/* Hero */
+.port-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;position:relative;overflow:hidden}
+.port-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 50%,#1a1a14 0%,var(--ink) 70%)}
+.port-hero-tag{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;opacity:.9}
+.port-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,8vw,110px);font-weight:300;line-height:1.0;margin-bottom:32px;position:relative}
+.port-hero h1 em{font-style:italic;color:var(--gold)}
+.port-hero-sub{font-size:16px;font-weight:300;color:rgba(245,240,232,.55);max-width:420px;line-height:1.7;margin-bottom:52px}
+.port-hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn-primary{padding:14px 36px;background:var(--gold);color:var(--ink);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:none;border-radius:2px;transition:all .3s}
+.btn-primary:hover{background:#d4b060;transform:translateY(-2px)}
+.btn-outline{padding:14px 36px;background:transparent;color:var(--cream);font-size:13px;font-weight:500;letter-spacing:.08em;cursor:pointer;border:1px solid rgba(245,240,232,.25);border-radius:2px;transition:all .3s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.port-hero-num{position:absolute;right:8vw;bottom:80px;font-family:'Cormorant Garamond',serif;font-size:120px;font-weight:300;color:rgba(245,240,232,.04);line-height:1;user-select:none}
+.scroll-hint{position:absolute;bottom:36px;left:8vw;display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.15em;color:rgba(245,240,232,.3);text-transform:uppercase}
+.scroll-hint::before{content:'';width:40px;height:1px;background:rgba(245,240,232,.2)}
+
+/* Stats bar */
+.port-stats{background:#141410;display:flex;border-top:1px solid rgba(255,255,255,.05)}
+.stat-item{flex:1;padding:32px;text-align:center;border-right:1px solid rgba(255,255,255,.05)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--gold)}
+.stat-label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,240,232,.35);margin-top:4px}
+
+/* Projects section */
+.port-projects{padding:120px 8vw}
+.section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:72px}
+.section-label{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,54px);font-weight:300;margin-top:12px;line-height:1.1}
+.section-sub{font-size:14px;color:rgba(245,240,232,.4);max-width:300px;text-align:right;line-height:1.6}
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+.project-card{position:relative;overflow:hidden;cursor:pointer;background:#111}
+.project-card-inner{padding:52px 48px;height:360px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;transition:transform .5s cubic-bezier(.25,.46,.45,.94)}
+.project-card:hover .project-card-inner{transform:scale(1.01)}
+.project-card:nth-child(1) .project-card-inner{background:linear-gradient(135deg,#1a0e05 0%,#3d1a08 100%)}
+.project-card:nth-child(2) .project-card-inner{background:linear-gradient(135deg,#080808 0%,#1c1c1c 100%)}
+.project-card:nth-child(3) .project-card-inner{background:linear-gradient(135deg,#061208 0%,#0f2412 100%)}
+.project-card:nth-child(4) .project-card-inner{background:linear-gradient(135deg,#1a0f06 0%,#2e1a0a 100%)}
+.project-card-decor{position:absolute;top:0;right:0;width:180px;height:180px;opacity:.08}
+.project-card:nth-child(1) .project-card-decor{background:radial-gradient(circle,#c9a84c,transparent)}
+.project-card:nth-child(2) .project-card-decor{background:radial-gradient(circle,#e0e0e0,transparent)}
+.project-card:nth-child(3) .project-card-decor{background:radial-gradient(circle,#7a9e7e,transparent)}
+.project-card:nth-child(4) .project-card-decor{background:radial-gradient(circle,#d4956a,transparent)}
+.project-number{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;opacity:.12;position:absolute;top:28px;right:36px;line-height:1;color:#fff}
+.project-tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;opacity:.5}
+.project-card:nth-child(1) .project-tag{color:var(--gold)}
+.project-card:nth-child(2) .project-tag{color:#a0a0a0}
+.project-card:nth-child(3) .project-tag{color:#7a9e7e}
+.project-card:nth-child(4) .project-tag{color:#d4956a}
+.project-name{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:#fff;margin-bottom:10px}
+.project-desc{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px;max-width:280px;line-height:1.5}
+.project-cta{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);transition:color .3s}
+.project-cta svg{width:16px;height:16px;transition:transform .3s}
+.project-card:hover .project-cta{color:#fff}
+.project-card:hover .project-cta svg{transform:translateX(4px)}
+.project-overlay{position:absolute;inset:0;background:rgba(0,0,0,.1);opacity:0;transition:opacity .3s}
+.project-card:hover .project-overlay{opacity:1}
+
+/* About / process section */
+.port-about{background:#0a0a08;padding:100px 8vw;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-text p{font-size:15px;color:rgba(245,240,232,.5);line-height:1.8;margin-top:20px}
+.process-list{margin-top:0}
+.process-item{padding:24px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;gap:28px;align-items:flex-start}
+.process-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--gold);opacity:.5;min-width:52px;line-height:1}
+.process-title{font-size:15px;font-weight:500;margin-bottom:6px}
+.process-body{font-size:13px;color:rgba(245,240,232,.4);line-height:1.6}
+
+/* Footer */
+.port-footer{background:#080806;padding:80px 8vw;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.04)}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--cream)}
+.footer-brand span{color:var(--gold);font-style:italic}
+.footer-contact{text-align:right}
+.footer-contact p{font-size:13px;color:rgba(245,240,232,.3);margin-bottom:6px}
+.footer-contact a{color:var(--gold);text-decoration:none;font-size:15px}
+.footer-copy{font-size:11px;color:rgba(245,240,232,.2);margin-top:8px}
+
+/* ============================================================
+   DEMO 1: EMBER & OAK — RESTAURANT
+   ============================================================ */
+#restaurant{font-family:'Lato',sans-serif;background:#0e0a05;color:#f0e6d3}
+.r-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:24px 60px;background:linear-gradient(180deg,rgba(14,10,5,.95) 0%,transparent 100%)}
+.r-logo{font-family:'Playfair Display',serif;font-size:20px;letter-spacing:.05em;color:#e8d5a3}
+.r-nav-links{display:flex;gap:36px}
+.r-nav-links a{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,230,211,.55);text-decoration:none;transition:color .3s;cursor:pointer}
+.r-nav-links a:hover{color:#e8d5a3}
+.r-reserve-btn{padding:10px 24px;border:1px solid #c9a84c;color:#c9a84c;font-size:11px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;background:transparent;transition:all .3s}
+.r-reserve-btn:hover{background:#c9a84c;color:#0e0a05}
+
+.r-hero{height:100vh;display:flex;align-items:flex-end;padding:0 60px 80px;position:relative;overflow:hidden}
+.r-hero-bg{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(14,10,5,.3) 0%,rgba(14,10,5,.7) 60%,rgba(14,10,5,.95) 100%),linear-gradient(145deg,#3d1f08 0%,#1a0c04 40%,#0e0a05 100%)}
+.r-hero-bg::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.r-hero-eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#c9a84c;margin-bottom:20px;opacity:.8}
+.r-hero h1{font-family:'Playfair Display',serif;font-size:clamp(54px,7vw,96px);font-weight:400;line-height:1.0;margin-bottom:24px;position:relative}
+.r-hero h1 em{color:#c9a84c;font-style:italic}
+.r-hero-info{display:flex;gap:48px;margin-top:36px;align-items:center}
+.r-hero-info-item{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,230,211,.45)}
+.r-hero-info-item strong{display:block;font-size:15px;font-weight:400;letter-spacing:0;text-transform:none;color:#e8d5a3;margin-bottom:4px}
+.r-divider-v{width:1px;height:40px;background:rgba(201,168,76,.2)}
+.r-scroll-indicator{position:absolute;right:60px;bottom:80px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,230,211,.25)}
+.r-scroll-line{width:1px;height:60px;background:linear-gradient(180deg,rgba(201,168,76,.5),transparent);animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.1)}}
+
+.r-menu-section{padding:100px 60px;background:#0e0a05}
+.r-section-title{text-align:center;margin-bottom:72px}
+.r-section-eyebrow{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#c9a84c;margin-bottom:16px}
+.r-section-title h2{font-family:'Playfair Display',serif;font-size:clamp(36px,4vw,52px);font-weight:400;color:#e8d5a3;line-height:1.1}
+.r-menu-tabs{display:flex;justify-content:center;gap:0;margin-bottom:56px;border-bottom:1px solid rgba(201,168,76,.15)}
+.r-tab{padding:14px 36px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,230,211,.4);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .3s}
+.r-tab.active{color:#c9a84c;border-bottom-color:#c9a84c}
+.r-tab:hover:not(.active){color:rgba(240,230,211,.7)}
+.r-menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(201,168,76,.08)}
+.r-menu-item{padding:32px 36px;background:#0e0a05;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;transition:background .3s}
+.r-menu-item:hover{background:#120d06}
+.r-item-info{}
+.r-item-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:#e8d5a3;margin-bottom:6px}
+.r-item-desc{font-size:13px;color:rgba(240,230,211,.4);line-height:1.5;max-width:300px}
+.r-item-price{font-size:18px;color:#c9a84c;white-space:nowrap;font-weight:300;margin-top:2px}
+.r-item-badge{display:inline-block;padding:3px 10px;border:1px solid rgba(201,168,76,.3);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#c9a84c;margin-top:10px}
+
+.r-story{padding:100px 60px;background:#0a0704;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.r-story-text h2{font-family:'Playfair Display',serif;font-size:clamp(32px,3.5vw,48px);font-weight:400;color:#e8d5a3;line-height:1.15;margin-bottom:24px}
+.r-story-text p{font-size:15px;color:rgba(240,230,211,.5);line-height:1.8;margin-bottom:20px}
+.r-story-img{position:relative;height:480px}
+.r-story-img-inner{width:100%;height:100%;background:linear-gradient(135deg,#3d2010,#1a0c05);position:relative;overflow:hidden}
+.r-story-img-inner::after{content:'"From our kitchen\A to your table"';white-space:pre;font-family:'Playfair Display',serif;font-size:28px;font-style:italic;color:rgba(201,168,76,.15);position:absolute;bottom:40px;left:36px;line-height:1.3}
+.r-quote-box{position:absolute;bottom:-30px;right:-30px;background:#c9a84c;padding:28px 32px;max-width:240px}
+.r-quote-box p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:#0e0a05;line-height:1.5}
+.r-quote-box span{font-size:11px;color:rgba(14,10,5,.6);margin-top:10px;display:block;letter-spacing:.08em}
+
+.r-reserve{padding:120px 60px;text-align:center;background:#0e0a05;border-top:1px solid rgba(201,168,76,.08)}
+.r-reserve h2{font-family:'Playfair Display',serif;font-size:clamp(36px,4vw,60px);color:#e8d5a3;margin-bottom:16px;font-weight:400}
+.r-reserve p{font-size:15px;color:rgba(240,230,211,.4);margin-bottom:48px}
+.r-reserve-form{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:700px;margin:0 auto}
+.r-input{padding:14px 20px;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);color:#e8d5a3;font-family:'Lato',sans-serif;font-size:14px;flex:1;min-width:150px;outline:none}
+.r-input::placeholder{color:rgba(240,230,211,.25)}
+.r-input:focus{border-color:#c9a84c}
+.r-submit{padding:14px 40px;background:#c9a84c;color:#0e0a05;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;cursor:pointer;border:none;white-space:nowrap;transition:all .3s}
+.r-submit:hover{background:#d4b060}
+
+/* ============================================================
+   DEMO 2: THE SHARP EDGE — BARBERSHOP
+   ============================================================ */
+#barbershop{font-family:'Barlow',sans-serif;background:#fff}
+.b-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:3px solid #111;display:flex;justify-content:space-between;align-items:center;padding:0 60px;height:72px}
+.b-logo{display:flex;align-items:center;gap:12px}
+.b-logo-mark{width:36px;height:36px;background:#111;display:flex;align-items:center;justify-content:center}
+.b-logo-mark svg{width:20px;height:20px;fill:#fff}
+.b-logo-text{font-family:'Oswald',sans-serif;font-size:18px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.b-nav-links{display:flex;gap:32px;align-items:center}
+.b-nav-links a{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#555;text-decoration:none;transition:color .3s;cursor:pointer}
+.b-nav-links a:hover{color:#111}
+.b-book-btn{padding:10px 28px;background:#111;color:#fff;font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;border:none;transition:all .3s}
+.b-book-btn:hover{background:#e63946}
+
+.b-hero{padding-top:72px;min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.b-hero-left{background:#111;padding:80px 64px;display:flex;flex-direction:column;justify-content:center}
+.b-hero-eyebrow{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:#e63946;margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.b-hero-eyebrow::before{content:'';width:30px;height:2px;background:#e63946}
+.b-hero-left h1{font-family:'Oswald',sans-serif;font-size:clamp(52px,5.5vw,80px);font-weight:600;color:#fff;line-height:1.0;text-transform:uppercase;letter-spacing:.02em;margin-bottom:28px}
+.b-hero-left h1 span{color:#e63946;display:block}
+.b-hero-left p{font-size:16px;color:rgba(255,255,255,.45);line-height:1.7;max-width:380px;margin-bottom:48px}
+.b-hero-ctas{display:flex;gap:14px}
+.b-cta-main{padding:15px 36px;background:#e63946;color:#fff;font-family:'Oswald',sans-serif;font-size:13px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border:none;transition:all .3s}
+.b-cta-main:hover{background:#c0303c}
+.b-cta-sec{padding:15px 36px;background:transparent;color:rgba(255,255,255,.6);font-family:'Oswald',sans-serif;font-size:13px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(255,255,255,.2);transition:all .3s}
+.b-cta-sec:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.b-hero-stats{display:flex;gap:40px;margin-top:60px;padding-top:40px;border-top:1px solid rgba(255,255,255,.08)}
+.b-stat{text-align:center}
+.b-stat-num{font-family:'Oswald',sans-serif;font-size:36px;font-weight:600;color:#e63946}
+.b-stat-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:4px}
+.b-hero-right{background:#f5f5f5;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.b-hero-right-bg{width:100%;height:100%;background:linear-gradient(135deg,#e8e8e8 0%,#f8f8f8 100%);display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:140px;font-weight:600;color:rgba(0,0,0,.04);text-transform:uppercase;letter-spacing:-.04em;line-height:1;overflow:hidden;padding:40px}
+.b-hero-badge{position:absolute;bottom:48px;right:48px;width:100px;height:100px;background:#e63946;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.b-hero-badge span:first-child{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.b-hero-badge span:last-child{font-family:'Oswald',sans-serif;font-size:22px;font-weight:600;color:#fff}
+
+.b-services{padding:100px 60px;background:#fff}
+.b-section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:64px}
+.b-section-header h2{font-family:'Oswald',sans-serif;font-size:clamp(36px,4vw,52px);font-weight:600;text-transform:uppercase;line-height:1}
+.b-section-header h2 span{color:#e63946}
+.b-services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#111}
+.b-service-card{background:#fff;padding:40px 36px;transition:background .3s}
+.b-service-card:hover{background:#f5f5f5}
+.b-service-icon{width:40px;height:3px;background:#e63946;margin-bottom:24px}
+.b-service-name{font-family:'Oswald',sans-serif;font-size:22px;font-weight:500;text-transform:uppercase;margin-bottom:8px}
+.b-service-desc{font-size:14px;color:#777;line-height:1.6;margin-bottom:24px}
+.b-service-price{font-family:'Oswald',sans-serif;font-size:28px;font-weight:600;color:#111}
+.b-service-price span{font-size:14px;font-weight:400;color:#aaa;margin-left:4px}
+
+.b-gallery{padding:0;background:#111;display:grid;grid-template-columns:2fr 1fr 1fr;gap:2px}
+.b-gal-item{background:linear-gradient(135deg,#222,#333);height:280px;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.15)}
+.b-gal-item:nth-child(1){background:linear-gradient(135deg,#1a1a1a,#2a2a2a)}
+.b-gal-item:nth-child(2){background:linear-gradient(135deg,#252525,#1a1a1a)}
+.b-gal-item:nth-child(3){background:linear-gradient(135deg,#202020,#2e2e2e)}
+
+.b-testimonials{padding:80px 60px;background:#f5f5f5}
+.b-test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.b-test-card{background:#fff;padding:32px;border-left:4px solid #e63946}
+.b-stars{color:#e63946;font-size:13px;margin-bottom:16px;letter-spacing:3px}
+.b-test-text{font-size:14px;color:#444;line-height:1.7;margin-bottom:20px;font-style:italic}
+.b-test-author{font-family:'Oswald',sans-serif;font-size:14px;font-weight:500;text-transform:uppercase;letter-spacing:.08em}
+.b-test-when{font-size:12px;color:#aaa;margin-top:3px}
+
+/* ============================================================
+   DEMO 3: SERENITY FLOW — YOGA STUDIO
+   ============================================================ */
+#yoga{font-family:'DM Sans',sans-serif;background:#f4f1ec}
+.y-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(244,241,236,.92);backdrop-filter:blur(12px);display:flex;justify-content:space-between;align-items:center;padding:0 60px;height:68px;border-bottom:1px solid rgba(122,158,126,.15)}
+.y-logo{font-family:'DM Serif Display',serif;font-size:21px;color:#3d5c3f;letter-spacing:.02em}
+.y-logo span{font-style:italic;color:#7a9e7e}
+.y-nav-links{display:flex;gap:32px;align-items:center}
+.y-nav-links a{font-size:13px;color:#7a7a6a;text-decoration:none;letter-spacing:.04em;transition:color .3s;cursor:pointer}
+.y-nav-links a:hover{color:#3d5c3f}
+.y-join-btn{padding:10px 26px;background:#3d5c3f;color:#f4f1ec;font-size:13px;cursor:pointer;border:none;border-radius:30px;letter-spacing:.04em;transition:all .3s}
+.y-join-btn:hover{background:#2d4a2f}
+
+.y-hero{padding-top:68px;min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-left:60px;padding-right:60px}
+.y-hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,#e8ede9 0%,#f4f1ec 50%,#ede8e0 100%)}
+.y-hero-circle{position:absolute;right:-10%;top:50%;transform:translateY(-50%);width:55vw;height:55vw;max-width:700px;max-height:700px;background:radial-gradient(ellipse,rgba(122,158,126,.12) 0%,transparent 70%);border-radius:50%}
+.y-hero-content{position:relative;max-width:600px}
+.y-hero-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;background:rgba(122,158,126,.12);border-radius:30px;font-size:12px;letter-spacing:.08em;color:#5a7a5c;margin-bottom:32px}
+.y-hero-pill::before{content:'';width:6px;height:6px;background:#7a9e7e;border-radius:50%}
+.y-hero h1{font-family:'DM Serif Display',serif;font-size:clamp(44px,6vw,78px);line-height:1.1;color:#2a3c2b;margin-bottom:24px}
+.y-hero h1 em{font-style:italic;color:#7a9e7e}
+.y-hero-sub{font-size:16px;color:#6a7a6a;line-height:1.7;max-width:440px;margin-bottom:48px}
+.y-hero-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.y-btn-main{padding:14px 36px;background:#3d5c3f;color:#f4f1ec;font-size:14px;cursor:pointer;border:none;border-radius:4px;letter-spacing:.04em;transition:all .3s}
+.y-btn-main:hover{background:#2d4a2f;transform:translateY(-1px)}
+.y-btn-link{font-size:14px;color:#5a7a5c;cursor:pointer;display:flex;align-items:center;gap:6px}
+.y-btn-link::after{content:'→'}
+.y-hero-float{position:absolute;right:60px;top:50%;transform:translateY(-50%);width:340px}
+.y-float-card{background:#fff;border-radius:20px;padding:32px;box-shadow:0 20px 60px rgba(61,92,63,.08)}
+.y-float-title{font-family:'DM Serif Display',serif;font-size:18px;color:#2a3c2b;margin-bottom:20px}
+.y-class-list{display:flex;flex-direction:column;gap:12px}
+.y-class-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(122,158,126,.1)}
+.y-class-item:last-child{border-bottom:none}
+.y-class-name{font-size:14px;color:#2a3c2b;font-weight:500}
+.y-class-time{font-size:12px;color:#9a9a8a;margin-top:2px}
+.y-class-spots{font-size:12px;padding:4px 10px;background:rgba(122,158,126,.1);color:#3d5c3f;border-radius:20px}
+
+.y-features{padding:100px 60px;background:#f4f1ec}
+.y-features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:64px}
+.y-feature{text-align:center}
+.y-feature-icon{width:64px;height:64px;background:rgba(122,158,126,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:26px}
+.y-feature-title{font-family:'DM Serif Display',serif;font-size:22px;color:#2a3c2b;margin-bottom:12px}
+.y-feature-desc{font-size:14px;color:#7a7a6a;line-height:1.7}
+
+.y-classes{padding:100px 0;background:#e8ede9}
+.y-classes-inner{padding:0 60px}
+.y-classes-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:56px}
+.y-class-card{background:#fff;border-radius:16px;overflow:hidden;display:flex;transition:transform .3s,box-shadow .3s}
+.y-class-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(61,92,63,.08)}
+.y-class-color{width:8px;flex-shrink:0}
+.y-class-card:nth-child(1) .y-class-color{background:#7a9e7e}
+.y-class-card:nth-child(2) .y-class-color{background:#b5927a}
+.y-class-card:nth-child(3) .y-class-color{background:#7a8e9e}
+.y-class-card:nth-child(4) .y-class-color{background:#9e7ab5}
+.y-class-content{padding:24px 28px;flex:1}
+.y-class-level{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#9a9a8a;margin-bottom:8px}
+.y-class-title{font-family:'DM Serif Display',serif;font-size:20px;color:#2a3c2b;margin-bottom:8px}
+.y-class-info{font-size:13px;color:#7a7a6a;line-height:1.6;margin-bottom:16px}
+.y-class-meta{display:flex;gap:16px}
+.y-class-meta span{font-size:12px;color:#5a7a5c;display:flex;align-items:center;gap:4px}
+
+.y-pricing{padding:100px 60px;background:#f4f1ec}
+.y-pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px}
+.y-plan{background:#fff;border-radius:16px;padding:40px 32px;border:2px solid transparent;transition:all .3s}
+.y-plan.featured{border-color:#7a9e7e;background:#f0f5f1}
+.y-plan-name{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#7a9e7e;margin-bottom:12px}
+.y-plan-price{font-family:'DM Serif Display',serif;font-size:44px;color:#2a3c2b;margin-bottom:4px}
+.y-plan-price span{font-size:16px;font-family:'DM Sans',sans-serif;color:#7a7a6a}
+.y-plan-desc{font-size:13px;color:#7a7a6a;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid rgba(122,158,126,.1)}
+.y-plan-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+.y-plan-features li{font-size:14px;color:#4a5a4b;display:flex;align-items:center;gap:10px}
+.y-plan-features li::before{content:'✓';color:#7a9e7e;font-weight:600}
+.y-plan-btn{width:100%;padding:13px;background:#3d5c3f;color:#f4f1ec;border:none;border-radius:8px;font-size:13px;cursor:pointer;letter-spacing:.05em;transition:all .3s}
+.y-plan-btn:hover{background:#2d4a2f}
+.y-plan:not(.featured) .y-plan-btn{background:transparent;color:#3d5c3f;border:1px solid rgba(61,92,63,.3)}
+.y-plan:not(.featured) .y-plan-btn:hover{background:rgba(61,92,63,.05)}
+
+/* ============================================================
+   DEMO 4: DAILY LOAF — BAKERY
+   ============================================================ */
+#bakery{font-family:'Quicksand',sans-serif;background:#faf6f0}
+.k-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:2px solid #f0e6d3;display:flex;justify-content:space-between;align-items:center;padding:0 60px;height:68px}
+.k-logo{font-family:'Pacifico',cursive;font-size:22px;color:#8b4513}
+.k-logo span{color:#d4845a}
+.k-nav-links{display:flex;gap:28px;align-items:center}
+.k-nav-links a{font-size:13px;color:#8a7060;text-decoration:none;font-weight:500;transition:color .3s;cursor:pointer}
+.k-nav-links a:hover{color:#8b4513}
+.k-order-btn{padding:10px 26px;background:#d4845a;color:#fff;font-size:13px;font-weight:600;cursor:pointer;border:none;border-radius:30px;transition:all .3s}
+.k-order-btn:hover{background:#c0744a;transform:translateY(-1px)}
+
+.k-hero{padding-top:68px;min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:#fdf9f4}
+.k-hero-bg-left{position:absolute;left:0;top:0;width:55%;height:100%;background:linear-gradient(135deg,#f5e6d0,#fdf0e0)}
+.k-hero-content{position:relative;padding-left:60px;max-width:580px;z-index:1}
+.k-hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:#fff3e0;border-radius:8px;font-size:12px;font-weight:600;color:#c17a3a;margin-bottom:28px;border:1px solid #f0d5b0}
+.k-hero h1{font-family:'Pacifico',cursive;font-size:clamp(44px,6vw,72px);color:#5c2e0a;line-height:1.2;margin-bottom:20px}
+.k-hero h1 span{color:#d4845a}
+.k-hero-sub{font-size:16px;color:#8a7060;line-height:1.7;margin-bottom:40px;max-width:400px}
+.k-hero-btns{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.k-btn-main{padding:14px 36px;background:#8b4513;color:#fff;font-size:14px;font-weight:600;cursor:pointer;border:none;border-radius:30px;transition:all .3s}
+.k-btn-main:hover{background:#722e0e;transform:translateY(-2px)}
+.k-btn-sec{padding:14px 28px;background:#fff;color:#8b4513;font-size:14px;font-weight:600;cursor:pointer;border:2px solid #e8c8a0;border-radius:30px;transition:all .3s}
+.k-btn-sec:hover{border-color:#8b4513}
+.k-hero-img-area{position:absolute;right:-20px;top:50%;transform:translateY(-50%);width:480px;height:520px;background:linear-gradient(135deg,#e8c89a,#f5ddb8);border-radius:60% 40% 40% 60% / 50% 50% 50% 50%;display:flex;align-items:center;justify-content:center;font-family:'Pacifico',cursive;font-size:80px;color:rgba(139,69,19,.08)}
+.k-hero-pills{display:flex;gap:12px;margin-top:40px;flex-wrap:wrap}
+.k-pill{padding:8px 16px;background:#fff;border:1px solid #f0d5b0;border-radius:30px;font-size:12px;font-weight:600;color:#8a6050;display:flex;align-items:center;gap:6px}
+.k-pill-dot{width:8px;height:8px;border-radius:50%;background:#d4845a}
+
+.k-featured{padding:100px 60px;background:#fdf9f4}
+.k-section-header{text-align:center;margin-bottom:64px}
+.k-eyebrow{font-size:13px;font-weight:600;color:#d4845a;letter-spacing:.08em;margin-bottom:10px}
+.k-section-header h2{font-family:'Pacifico',cursive;font-size:clamp(32px,4vw,48px);color:#5c2e0a;line-height:1.2}
+.k-products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.k-product{background:#fff;border-radius:20px;overflow:hidden;transition:transform .3s,box-shadow .3s;cursor:pointer}
+.k-product:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(139,69,19,.1)}
+.k-product-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:52px}
+.k-product:nth-child(1) .k-product-img{background:linear-gradient(135deg,#f5ddb8,#ecc98a)}
+.k-product:nth-child(2) .k-product-img{background:linear-gradient(135deg,#f0e0e0,#e8c8c8)}
+.k-product:nth-child(3) .k-product-img{background:linear-gradient(135deg,#e8f0e0,#d4e8c8)}
+.k-product:nth-child(4) .k-product-img{background:linear-gradient(135deg,#f5e8d0,#ead4a8)}
+.k-product-body{padding:20px}
+.k-product-name{font-size:16px;font-weight:600;color:#5c2e0a;margin-bottom:6px}
+.k-product-desc{font-size:13px;color:#9a8070;line-height:1.5;margin-bottom:14px}
+.k-product-footer{display:flex;justify-content:space-between;align-items:center}
+.k-product-price{font-size:18px;font-weight:700;color:#8b4513}
+.k-add-btn{width:32px;height:32px;background:#d4845a;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .3s;line-height:1}
+.k-add-btn:hover{background:#8b4513;transform:scale(1.1)}
+
+.k-story{padding:100px 60px;background:#fff3e0;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.k-story-text .k-eyebrow{text-align:left}
+.k-story-text h2{font-family:'Pacifico',cursive;font-size:clamp(28px,3vw,42px);color:#5c2e0a;line-height:1.3;margin:10px 0 20px}
+.k-story-text p{font-size:15px;color:#7a6050;line-height:1.8;margin-bottom:18px}
+.k-story-stats{display:flex;gap:36px;margin-top:32px}
+.k-story-stat-num{font-family:'Pacifico',cursive;font-size:36px;color:#d4845a}
+.k-story-stat-label{font-size:12px;color:#9a8070;margin-top:4px}
+.k-story-img{background:linear-gradient(135deg,#f5ddb8,#ead4a8);border-radius:40px 8px 40px 8px;height:460px;display:flex;align-items:center;justify-content:center;font-family:'Pacifico',cursive;font-size:22px;color:rgba(139,69,19,.15);text-align:center;padding:40px}
+
+.k-newsletter{padding:80px 60px;background:#8b4513;text-align:center}
+.k-newsletter h2{font-family:'Pacifico',cursive;font-size:clamp(28px,3.5vw,44px);color:#fdf9f4;margin-bottom:12px}
+.k-newsletter p{font-size:15px;color:rgba(253,249,244,.6);margin-bottom:40px}
+.k-nl-form{display:flex;gap:0;max-width:440px;margin:0 auto;border-radius:30px;overflow:hidden;border:2px solid rgba(255,255,255,.2)}
+.k-nl-input{flex:1;padding:14px 24px;background:rgba(255,255,255,.1);border:none;color:#fdf9f4;font-family:'Quicksand',sans-serif;font-size:14px;outline:none}
+.k-nl-input::placeholder{color:rgba(253,249,244,.4)}
+.k-nl-submit{padding:14px 28px;background:#d4845a;color:#fff;border:none;font-family:'Quicksand',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .3s}
+.k-nl-submit:hover{background:#c0744a}
+
+/* Shared section title style for portfolio sub-sections */
+.y-section-title{text-align:center;margin-bottom:20px}
+.y-section-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#7a9e7e;margin-bottom:12px}
+.y-section-title h2{font-family:'DM Serif Display',serif;font-size:clamp(32px,3.5vw,46px);color:#2a3c2b;line-height:1.1}
+.y-section-title p{font-size:15px;color:#7a7a6a;margin-top:12px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.animate-in{animation:fadeUp .7s ease forwards}
+.animate-in-delay{animation:fadeUp .7s ease .15s both}
+.animate-in-delay-2{animation:fadeUp .7s ease .3s both}
+
+/* ── Hamburger ── */
+.mob-menu-btn{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;z-index:200}
+.mob-menu-btn span{display:block;width:22px;height:2px;border-radius:2px;transition:all .3s}
+.mob-nav-drawer{display:none;position:fixed;inset:0;z-index:150;flex-direction:column;justify-content:center;align-items:center;gap:32px}
+.mob-nav-drawer.open{display:flex}
+.mob-nav-drawer a{font-size:22px;cursor:pointer;text-decoration:none;letter-spacing:.06em}
+
+/* ── 900px ── */
+@media(max-width:900px){
+  .projects-grid,.r-menu-grid,.b-services-grid,.y-features-grid,.y-classes-grid,.y-pricing-grid,.k-products-grid{grid-template-columns:1fr}
+  .port-about,.r-story,.b-hero,.k-story{grid-template-columns:1fr}
+  .port-hero,.r-hero,.y-hero,.k-hero,.b-hero-left{padding-left:24px;padding-right:24px}
+  .port-projects,.r-menu-section,.b-services,.y-features,.y-classes-inner,.y-pricing,.k-featured{padding:60px 24px}
+  .port-about,.r-story,.r-reserve,.b-testimonials,.k-story,.k-newsletter{padding:60px 24px}
+  .b-gallery{grid-template-columns:1fr}
+  .y-hero-float,.b-hero-right,.k-hero-img-area{display:none}
+  .b-hero{grid-template-columns:1fr}
+  .r-hero-info{flex-wrap:wrap;gap:24px}
+  .port-stats{flex-wrap:wrap}
+  .stat-item{flex-basis:50%}
+  .port-footer{flex-direction:column;gap:24px;text-align:center}
+  .footer-contact{text-align:center}
+  .b-test-grid{grid-template-columns:1fr}
+  .section-header{flex-direction:column;align-items:flex-start;gap:16px}
+  .section-sub{text-align:left}
+}
+
+/* ── 600px mobile ── */
+@media(max-width:600px){
+  .back-btn{top:68px;left:12px;font-size:11px;padding:6px 14px}
+
+  /* Hide desktop nav items, show hamburger */
+  .r-nav-links,.r-reserve-btn,
+  .b-nav-links,.b-book-btn,
+  .y-nav-links,.y-join-btn,
+  .k-nav-links,.k-order-btn{display:none}
+  .mob-menu-btn{display:flex}
+
+  .r-nav,.b-nav,.y-nav,.k-nav{padding:0 16px;height:58px}
+  .b-logo-text{font-size:15px}
+
+  /* Portfolio hero */
+  .port-hero{padding:100px 20px 80px;min-height:auto}
+  .port-hero h1{font-size:clamp(42px,13vw,68px)}
+  .port-hero-sub{font-size:14px;margin-bottom:32px}
+  .port-hero-num,.scroll-hint{display:none}
+  .port-hero-btns{flex-direction:column;gap:10px}
+  .btn-primary,.btn-outline{padding:13px 20px;font-size:12px;width:100%;text-align:center}
+
+  .port-stats{flex-wrap:wrap}
+  .stat-item{flex-basis:50%;padding:20px 10px}
+  .stat-num{font-size:30px}
+
+  .port-projects{padding:48px 16px}
+  .projects-grid{gap:2px}
+  .project-card-inner{height:240px;padding:28px 20px}
+  .project-name{font-size:26px}
+  .project-number{font-size:48px;top:16px;right:20px}
+
+  .port-about{padding:48px 16px;gap:36px}
+  .port-footer{padding:48px 16px}
+
+  /* Restaurant */
+  .r-hero{padding:80px 20px 56px;height:auto;min-height:100vh}
+  .r-hero h1{font-size:clamp(38px,11vw,60px)}
+  .r-hero-info{flex-direction:column;gap:14px}
+  .r-divider-v{display:none}
+  .r-scroll-indicator{display:none}
+
+  .r-menu-section{padding:48px 16px}
+  .r-menu-tabs{overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .r-menu-tabs::-webkit-scrollbar{display:none}
+  .r-tab{padding:11px 18px;white-space:nowrap;font-size:11px}
+  .r-menu-grid{grid-template-columns:1fr}
+  .r-menu-item{flex-direction:column;gap:8px;padding:20px 16px}
+
+  .r-story{padding:48px 16px;gap:32px}
+  .r-story-img{height:250px}
+  .r-quote-box{position:static;margin-top:16px}
+  .r-reserve{padding:56px 16px}
+  .r-reserve-form{flex-direction:column}
+  .r-input,.r-submit{width:100%;min-width:auto}
+
+  /* Barbershop */
+  .b-hero-left{padding:48px 20px}
+  .b-hero-left h1{font-size:clamp(42px,12vw,68px)}
+  .b-hero-stats{gap:20px;flex-wrap:wrap}
+  .b-stat-num{font-size:26px}
+  .b-hero-ctas,.b-cta-main,.b-cta-sec{width:100%}
+  .b-hero-ctas{flex-direction:column;gap:10px}
+  .b-services{padding:48px 16px}
+  .b-service-card{padding:24px 18px}
+  .b-section-header{flex-direction:column;gap:12px}
+  .b-gal-item{height:160px}
+  .b-testimonials{padding:48px 16px}
+
+  /* Yoga */
+  .y-hero{padding:80px 20px 56px;min-height:auto}
+  .y-hero h1{font-size:clamp(38px,11vw,60px)}
+  .y-hero-sub{font-size:14px}
+  .y-hero-actions{flex-direction:column;align-items:stretch;gap:10px}
+  .y-btn-main{text-align:center;padding:13px}
+  .y-pill{font-size:11px;padding:6px 12px}
+  .y-features{padding:48px 16px}
+  .y-features-grid{gap:24px}
+  .y-classes{padding:48px 0}
+  .y-classes-inner{padding:0 16px}
+  .y-class-content{padding:16px 18px}
+  .y-class-meta{flex-wrap:wrap;gap:6px}
+  .y-pricing{padding:48px 16px}
+  .y-pricing-grid{gap:14px}
+  .y-plan{padding:24px 18px}
+
+  /* Bakery */
+  .k-hero{padding:80px 20px 56px;min-height:auto}
+  .k-hero h1{font-size:clamp(36px,11vw,56px)}
+  .k-hero-sub{font-size:14px}
+  .k-hero-btns{flex-direction:column;gap:10px}
+  .k-btn-main,.k-btn-sec{width:100%;text-align:center;padding:13px}
+  .k-pill{font-size:11px;padding:6px 12px}
+  .k-featured{padding:48px 16px}
+  .k-products-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .k-product-img{height:110px;font-size:34px}
+  .k-product-body{padding:12px}
+  .k-product-name{font-size:13px}
+  .k-product-desc{font-size:11px;margin-bottom:10px}
+  .k-product-price{font-size:14px}
+  .k-story{padding:48px 16px;gap:32px}
+  .k-story-img{height:200px}
+  .k-story-stats{gap:16px}
+  .k-newsletter{padding:48px 16px}
+  .k-nl-form{flex-direction:column;border-radius:12px}
+  .k-nl-input,.k-nl-submit{width:100%;padding:14px 18px}
+}
+</style>
+</head>
+<body>
+
+<button class="back-btn" id="backBtn" onclick="showPage('portfolio')">← Back to Portfolio</button>
+
+<!-- ==================== PORTFOLIO HOME ==================== -->
+<div id="portfolio" class="page active">
+
+  <section class="port-hero">
+    <div class="port-hero-bg" style="position:absolute;inset:0;background:linear-gradient(135deg,#0d0d0b 0%,#1a1a12 100%)"></div>
+    <div style="position:relative">
+      <p class="port-hero-tag">Local Business Web Design — Mumbai & Beyond</p>
+      <h1>Websites that<br><em>grow</em><br>your business</h1>
+      <p class="port-hero-sub">I build high-converting websites for local restaurants, salons, studios, and shops — beautiful, fast, and built to bring in customers.</p>
+      <div class="port-hero-btns">
+        <button class="btn-primary" onclick="document.querySelector('.port-projects').scrollIntoView({behavior:'smooth'})">View My Work</button>
+        <button class="btn-outline" onclick="document.querySelector('.port-about').scrollIntoView({behavior:'smooth'})">How It Works</button>
+      </div>
+    </div>
+    <div class="port-hero-num">04</div>
+    <div class="scroll-hint">Scroll to explore</div>
+  </section>
+
+  <div class="port-stats">
+    <div class="stat-item">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Projects Delivered</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4.9</div>
+      <div class="stat-label">Client Rating</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">7 day</div>
+      <div class="stat-label">Avg. Launch Time</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Mobile-Ready</div>
+    </div>
+  </div>
+
+  <section class="port-projects">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Selected Work</p>
+        <h2 class="section-title" style="color:var(--cream)">Example projects<br>for local businesses</h2>
+      </div>
+      <p class="section-sub">Click any project to explore a live demo of what your website could look like.</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card" onclick="showPage('restaurant')">
+        <div class="project-card-inner">
+          <div class="project-card-decor"></div>
+          <div class="project-number">01</div>
+          <p class="project-tag">Restaurant & Dining</p>
+          <h3 class="project-name">Ember & Oak</h3>
+          <p class="project-desc">Fine dining with online reservations, seasonal menus & chef's story</p>
+          <span class="project-cta">View Demo <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </div>
+        <div class="project-overlay"></div>
+      </div>
+      <div class="project-card" onclick="showPage('barbershop')">
+        <div class="project-card-inner">
+          <div class="project-card-decor"></div>
+          <div class="project-number">02</div>
+          <p class="project-tag">Barbershop & Salon</p>
+          <h3 class="project-name">The Sharp Edge</h3>
+          <p class="project-desc">Bold identity with service menu, pricing & online booking</p>
+          <span class="project-cta">View Demo <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </div>
+        <div class="project-overlay"></div>
+      </div>
+      <div class="project-card" onclick="showPage('yoga')">
+        <div class="project-card-inner">
+          <div class="project-card-decor"></div>
+          <div class="project-number">03</div>
+          <p class="project-tag">Fitness & Wellness</p>
+          <h3 class="project-name">Serenity Flow</h3>
+          <p class="project-desc">Yoga studio with class schedule, memberships & instructor profiles</p>
+          <span class="project-cta">View Demo <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </div>
+        <div class="project-overlay"></div>
+      </div>
+      <div class="project-card" onclick="showPage('bakery')">
+        <div class="project-card-inner">
+          <div class="project-card-decor"></div>
+          <div class="project-number">04</div>
+          <p class="project-tag">Food & Bakery</p>
+          <h3 class="project-name">Daily Loaf</h3>
+          <p class="project-desc">Artisan bakery with product showcase, story & email collection</p>
+          <span class="project-cta">View Demo <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </div>
+        <div class="project-overlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="port-about">
+    <div class="about-text">
+      <p class="section-label" style="font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)">My Process</p>
+      <h2 class="section-title" style="color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:clamp(32px,3.5vw,48px);font-weight:300;margin-top:12px">From idea to<br><em style="color:var(--gold)">live website</em><br>in 7 days</h2>
+      <p style="font-size:15px;color:rgba(245,240,232,.45);line-height:1.8;margin-top:20px">I specialise in small and medium local businesses — I understand your budget, your goals, and what your customers actually need to see before they walk through your door.</p>
+    </div>
+    <div class="process-list">
+      <div class="process-item">
+        <div class="process-num">01</div>
+        <div>
+          <div class="process-title" style="color:var(--cream)">Discovery Call</div>
+          <div class="process-body">We talk about your business, your customers, and what you want your website to achieve. Free 30-minute consultation.</div>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="process-num">02</div>
+        <div>
+          <div class="process-title" style="color:var(--cream)">Design & Build</div>
+          <div class="process-body">I design and build your custom website — fully mobile-ready, fast-loading, with all the pages and features you need.</div>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="process-num">03</div>
+        <div>
+          <div class="process-title" style="color:var(--cream)">Launch & Support</div>
+          <div class="process-body">Your site goes live. I handle hosting setup, Google listing, and provide 3 months of free updates and support.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="port-footer">
+    <div>
+      <div class="footer-brand">Dhanesh <span>Sawant</span></div>
+      <p style="font-size:12px;color:rgba(245,240,232,.25);margin-top:8px">Local Business Web Designer — Mumbai</p>
+    </div>
+    <div class="footer-contact">
+      <p>Ready to get started?</p>
+      <a href="mailto:Dhaneshsawant7@gmail.com">Dhaneshsawant7@gmail.com</a>
+      <p class="footer-copy">© 2025 Dhanesh Sawant. All demos are sample work.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== DEMO 1: RESTAURANT ==================== -->
+<div id="restaurant" class="page">
+  <nav class="r-nav">
+    <div class="r-logo">Ember & Oak</div>
+    <div class="r-nav-links">
+      <a>Menu</a>
+      <a>Our Story</a>
+      <a>Events</a>
+      <a>Gallery</a>
+    </div>
+    <button class="r-reserve-btn">Reserve a Table</button>
+    <button class="mob-menu-btn" onclick="toggleDrawer('r-drawer')" aria-label="Open menu">
+      <span style="background:#e8d5a3"></span><span style="background:#e8d5a3"></span><span style="background:#e8d5a3"></span>
+    </button>
+  </nav>
+  <div class="mob-nav-drawer" id="r-drawer" style="background:rgba(14,10,5,.97)">
+    <a style="color:#e8d5a3;font-family:'Playfair Display',serif" onclick="toggleDrawer('r-drawer')">Menu</a>
+    <a style="color:#e8d5a3;font-family:'Playfair Display',serif" onclick="toggleDrawer('r-drawer')">Our Story</a>
+    <a style="color:#e8d5a3;font-family:'Playfair Display',serif" onclick="toggleDrawer('r-drawer')">Events</a>
+    <a style="color:#e8d5a3;font-family:'Playfair Display',serif" onclick="toggleDrawer('r-drawer')">Gallery</a>
+    <button style="padding:13px 36px;background:#c9a84c;color:#0e0a05;font-size:14px;border:none;cursor:pointer;font-family:'Lato',sans-serif" onclick="toggleDrawer('r-drawer')">Reserve a Table</button>
+    <button style="background:none;border:none;color:rgba(240,230,211,.4);font-size:28px;cursor:pointer;margin-top:8px" onclick="toggleDrawer('r-drawer')">✕</button>
+  </div>
+
+  <section class="r-hero">
+    <div class="r-hero-bg"></div>
+    <div style="position:relative">
+      <p class="r-hero-eyebrow">Farm-to-table cuisine · Est. 2019</p>
+      <h1>Where fire<br>meets <em>flavour</em></h1>
+      <div class="r-hero-info">
+        <div class="r-hero-info-item">
+          <strong>Tue–Sun</strong>
+          Opening Hours
+        </div>
+        <div class="r-divider-v"></div>
+        <div class="r-hero-info-item">
+          <strong>6pm – 11pm</strong>
+          Dinner Service
+        </div>
+        <div class="r-divider-v"></div>
+        <div class="r-hero-info-item">
+          <strong>Colaba, Mumbai</strong>
+          Location
+        </div>
+      </div>
+    </div>
+    <div class="r-scroll-indicator">
+      <div class="r-scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <section class="r-menu-section">
+    <div class="r-section-title">
+      <p class="r-section-eyebrow">Our Offerings</p>
+      <h2>Seasonal Menu</h2>
+    </div>
+    <div class="r-menu-tabs">
+      <div class="r-tab active" onclick="setMenuTab(this,0)">Starters</div>
+      <div class="r-tab" onclick="setMenuTab(this,1)">Mains</div>
+      <div class="r-tab" onclick="setMenuTab(this,2)">Desserts</div>
+      <div class="r-tab" onclick="setMenuTab(this,3)">Drinks</div>
+    </div>
+    <div class="r-menu-grid" id="menuGrid">
+      <div class="r-menu-item">
+        <div class="r-item-info">
+          <div class="r-item-name">Burrata & Heritage Tomatoes</div>
+          <div class="r-item-desc">Creamy buffalo burrata, slow-roasted vine tomatoes, aged balsamic, micro basil</div>
+          <div class="r-item-badge">Vegetarian</div>
+        </div>
+        <div class="r-item-price">₹680</div>
+      </div>
+      <div class="r-menu-item">
+        <div class="r-item-info">
+          <div class="r-item-name">Seared Scallops</div>
+          <div class="r-item-desc">Hand-dived scallops, cauliflower purée, crispy capers, smoked paprika oil</div>
+          <div class="r-item-badge">Signature</div>
+        </div>
+        <div class="r-item-price">₹920</div>
+      </div>
+      <div class="r-menu-item">
+        <div class="r-item-info">
+          <div class="r-item-name">Roasted Bone Marrow</div>
+          <div class="r-item-desc">Grass-fed bone marrow, parsley salad, sourdough toast, sea salt flakes</div>
+        </div>
+        <div class="r-item-price">₹780</div>
+      </div>
+      <div class="r-menu-item">
+        <div class="r-item-info">
+          <div class="r-item-name">Charred Heirloom Beetroot</div>
+          <div class="r-item-desc">Roasted golden beetroot, whipped goat curd, walnut crumble, dill oil</div>
+          <div class="r-item-badge">Vegan</div>
+        </div>
+        <div class="r-item-price">₹560</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="r-story">
+    <div class="r-story-text">
+      <p class="r-section-eyebrow" style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#c9a84c;margin-bottom:16px">Our Philosophy</p>
+      <h2>Cooking with<br>intention, serving<br>with soul</h2>
+      <p>Every dish at Ember & Oak begins with a conversation — with farmers, fishermen, and foragers who share our obsession with quality.</p>
+      <p>Chef Aryan Kapoor trained in Lyon before returning to Mumbai to build something rooted in Indian soil but speaking a universal culinary language.</p>
+      <button class="r-reserve-btn" style="margin-top:32px;padding:14px 36px">Meet Our Chef</button>
+    </div>
+    <div class="r-story-img">
+      <div class="r-story-img-inner"></div>
+      <div class="r-quote-box">
+        <p>"Every plate tells the story of where it came from."</p>
+        <span>— Chef Aryan Kapoor</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="r-reserve">
+    <p class="r-section-eyebrow" style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#c9a84c;margin-bottom:16px">Book Your Table</p>
+    <h2>Join us for dinner</h2>
+    <p>We'd love to have you. Reservations recommended, especially on weekends.</p>
+    <div class="r-reserve-form">
+      <input class="r-input" type="text" placeholder="Your Name">
+      <input class="r-input" type="date" style="background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);color:#e8d5a3;padding:14px 20px;font-size:14px;flex:1;min-width:150px;outline:none">
+      <input class="r-input" type="text" placeholder="Guests (2-10)">
+      <button class="r-submit">Reserve Now</button>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== DEMO 2: BARBERSHOP ==================== -->
+<div id="barbershop" class="page">
+  <nav class="b-nav">
+    <div class="b-logo">
+      <div class="b-logo-mark"><svg viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4zm0 2a4 4 0 100 8 4 4 0 000-8z"/></svg></div>
+      <div class="b-logo-text">The Sharp Edge</div>
+    </div>
+    <div class="b-nav-links">
+      <a>Services</a>
+      <a>Barbers</a>
+      <a>Gallery</a>
+      <a>Pricing</a>
+    </div>
+    <button class="b-book-btn">Book Now</button>
+    <button class="mob-menu-btn" onclick="toggleDrawer('b-drawer')" aria-label="Open menu">
+      <span style="background:#111"></span><span style="background:#111"></span><span style="background:#111"></span>
+    </button>
+  </nav>
+  <div class="mob-nav-drawer" id="b-drawer" style="background:#fff">
+    <a style="color:#111;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em" onclick="toggleDrawer('b-drawer')">Services</a>
+    <a style="color:#111;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em" onclick="toggleDrawer('b-drawer')">Barbers</a>
+    <a style="color:#111;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em" onclick="toggleDrawer('b-drawer')">Gallery</a>
+    <a style="color:#111;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em" onclick="toggleDrawer('b-drawer')">Pricing</a>
+    <button style="padding:13px 40px;background:#e63946;color:#fff;font-family:'Oswald',sans-serif;font-size:14px;border:none;cursor:pointer;letter-spacing:.12em;text-transform:uppercase" onclick="toggleDrawer('b-drawer')">Book Now</button>
+    <button style="background:none;border:none;color:#aaa;font-size:28px;cursor:pointer;margin-top:8px" onclick="toggleDrawer('b-drawer')">✕</button>
+  </div>
+
+  <section class="b-hero">
+    <div class="b-hero-left">
+      <p class="b-hero-eyebrow">Premium Grooming · Since 2017</p>
+      <h1>Look Sharp.<br><span>Feel Sharp.</span></h1>
+      <p>Mumbai's finest barbershop experience. Traditional techniques, modern style, zero compromise.</p>
+      <div class="b-hero-ctas">
+        <button class="b-cta-main">Book Appointment</button>
+        <button class="b-cta-sec">View Services</button>
+      </div>
+      <div class="b-hero-stats">
+        <div class="b-stat">
+          <div class="b-stat-num">4800+</div>
+          <div class="b-stat-label">Happy clients</div>
+        </div>
+        <div class="b-stat">
+          <div class="b-stat-num">7</div>
+          <div class="b-stat-label">Expert barbers</div>
+        </div>
+        <div class="b-stat">
+          <div class="b-stat-num">4.9★</div>
+          <div class="b-stat-label">Google rating</div>
+        </div>
+      </div>
+    </div>
+    <div class="b-hero-right">
+      <div class="b-hero-right-bg">THE<br>SHARP<br>EDGE</div>
+      <div class="b-hero-badge">
+        <span>EST.</span>
+        <span>2017</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="b-services">
+    <div class="b-section-header">
+      <h2>Our <span>Services</span></h2>
+      <p style="font-size:14px;color:#888;max-width:280px;line-height:1.6">Every cut is executed with precision. Walk in, walk out confident.</p>
+    </div>
+    <div class="b-services-grid">
+      <div class="b-service-card">
+        <div class="b-service-icon"></div>
+        <div class="b-service-name">Classic Cut</div>
+        <div class="b-service-desc">Traditional scissor cut with shampoo, scalp massage and blowout finish.</div>
+        <div class="b-service-price">₹550 <span>/ 45 min</span></div>
+      </div>
+      <div class="b-service-card">
+        <div class="b-service-icon"></div>
+        <div class="b-service-name">Fade & Style</div>
+        <div class="b-service-desc">Precision fade with clipper work, lineup and personalized styling.</div>
+        <div class="b-service-price">₹750 <span>/ 60 min</span></div>
+      </div>
+      <div class="b-service-card">
+        <div class="b-service-icon"></div>
+        <div class="b-service-name">Hot Towel Shave</div>
+        <div class="b-service-desc">Traditional straight-razor shave with hot towel, pre-shave oils and aftercare.</div>
+        <div class="b-service-price">₹650 <span>/ 40 min</span></div>
+      </div>
+      <div class="b-service-card">
+        <div class="b-service-icon"></div>
+        <div class="b-service-name">Beard Sculpt</div>
+        <div class="b-service-desc">Shape, define and edge your beard to complement your face structure.</div>
+        <div class="b-service-price">₹450 <span>/ 30 min</span></div>
+      </div>
+      <div class="b-service-card">
+        <div class="b-service-icon"></div>
+        <div class="b-service-name">The Works</div>
+        <div class="b-service-desc">Full package — haircut, hot towel shave, beard sculpt and face wash.</div>
+        <div class="b-service-price">₹1,400 <span>/ 90 min</span></div>
+      </div>
+      <div class="b-service-card">
+        <div class="b-service-icon"></div>
+        <div class="b-service-name">Kids Cut</div>
+        <div class="b-service-desc">Patient, fun and precise cuts for boys under 12. Includes wash and style.</div>
+        <div class="b-service-price">₹350 <span>/ 30 min</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="b-gallery">
+    <div class="b-gal-item">Photo Gallery</div>
+    <div class="b-gal-item">Our Shop</div>
+    <div class="b-gal-item">Our Work</div>
+  </div>
+
+  <section class="b-testimonials">
+    <div class="b-section-header">
+      <h2>What <span>clients</span><br>are saying</h2>
+    </div>
+    <div class="b-test-grid">
+      <div class="b-test-card">
+        <div class="b-stars">★★★★★</div>
+        <p class="b-test-text">"Best haircut I've ever had in Mumbai. The attention to detail is unreal — walked out feeling like a different person."</p>
+        <div class="b-test-author">Rahul M.</div>
+        <div class="b-test-when">Regular since 2021</div>
+      </div>
+      <div class="b-test-card">
+        <div class="b-stars">★★★★★</div>
+        <p class="b-test-text">"The hot towel shave experience is absolutely worth every rupee. Professional, relaxing, and the results speak for themselves."</p>
+        <div class="b-test-author">Karan S.</div>
+        <div class="b-test-when">Monthly visitor</div>
+      </div>
+      <div class="b-test-card">
+        <div class="b-stars">★★★★★</div>
+        <p class="b-test-text">"Finally found a barber who actually listens. My beard has never looked this clean. Wouldn't go anywhere else now."</p>
+        <div class="b-test-author">Dev P.</div>
+        <div class="b-test-when">Loyal customer</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== DEMO 3: YOGA STUDIO ==================== -->
+<div id="yoga" class="page">
+  <nav class="y-nav">
+    <div class="y-logo">Serenity <span>Flow</span></div>
+    <div class="y-nav-links">
+      <a>Classes</a>
+      <a>Instructors</a>
+      <a>Schedule</a>
+      <a>Pricing</a>
+    </div>
+    <button class="y-join-btn">Start Free Trial</button>
+    <button class="mob-menu-btn" onclick="toggleDrawer('y-drawer')" aria-label="Open menu">
+      <span style="background:#3d5c3f"></span><span style="background:#3d5c3f"></span><span style="background:#3d5c3f"></span>
+    </button>
+  </nav>
+  <div class="mob-nav-drawer" id="y-drawer" style="background:rgba(244,241,236,.98)">
+    <a style="color:#2a3c2b;font-family:'DM Serif Display',serif;font-size:26px" onclick="toggleDrawer('y-drawer')">Classes</a>
+    <a style="color:#2a3c2b;font-family:'DM Serif Display',serif;font-size:26px" onclick="toggleDrawer('y-drawer')">Instructors</a>
+    <a style="color:#2a3c2b;font-family:'DM Serif Display',serif;font-size:26px" onclick="toggleDrawer('y-drawer')">Schedule</a>
+    <a style="color:#2a3c2b;font-family:'DM Serif Display',serif;font-size:26px" onclick="toggleDrawer('y-drawer')">Pricing</a>
+    <button style="padding:13px 36px;background:#3d5c3f;color:#f4f1ec;border:none;border-radius:30px;font-size:15px;cursor:pointer" onclick="toggleDrawer('y-drawer')">Start Free Trial</button>
+    <button style="background:none;border:none;color:#aaa;font-size:28px;cursor:pointer;margin-top:8px" onclick="toggleDrawer('y-drawer')">✕</button>
+  </div>
+
+  <section class="y-hero">
+    <div class="y-hero-bg"></div>
+    <div class="y-hero-circle"></div>
+    <div class="y-hero-content">
+      <div class="y-hero-pill">Now open in Bandra & Powai</div>
+      <h1>Find your<br><em>flow</em>,<br>find yourself</h1>
+      <p class="y-hero-sub">A warm, welcoming yoga studio for all levels. From beginner to advanced — every body belongs here.</p>
+      <div class="y-hero-actions">
+        <button class="y-btn-main">Explore Classes</button>
+        <span class="y-btn-link" style="cursor:pointer">View Schedule</span>
+      </div>
+      <div class="y-hero-pills">
+        <div class="y-pill"><div class="y-pill-dot"></div>Hatha Yoga</div>
+        <div class="y-pill"><div class="y-pill-dot" style="background:#b5927a"></div>Vinyasa Flow</div>
+        <div class="y-pill"><div class="y-pill-dot" style="background:#7a8e9e"></div>Yin & Restore</div>
+        <div class="y-pill"><div class="y-pill-dot" style="background:#9e7ab5"></div>Meditation</div>
+      </div>
+    </div>
+    <div class="y-hero-float">
+      <div class="y-float-card">
+        <div class="y-float-title">Today's Schedule</div>
+        <div class="y-class-list">
+          <div class="y-class-item">
+            <div>
+              <div class="y-class-name">Morning Hatha</div>
+              <div class="y-class-time">7:00 AM · 60 min · Priya</div>
+            </div>
+            <div class="y-class-spots">3 spots</div>
+          </div>
+          <div class="y-class-item">
+            <div>
+              <div class="y-class-name">Vinyasa Flow</div>
+              <div class="y-class-time">10:00 AM · 75 min · Arjun</div>
+            </div>
+            <div class="y-class-spots">8 spots</div>
+          </div>
+          <div class="y-class-item">
+            <div>
+              <div class="y-class-name">Yin & Restore</div>
+              <div class="y-class-time">6:30 PM · 90 min · Meera</div>
+            </div>
+            <div class="y-class-spots" style="background:rgba(212,133,90,.1);color:#c0744a">Full</div>
+          </div>
+          <div class="y-class-item">
+            <div>
+              <div class="y-class-name">Meditation</div>
+              <div class="y-class-time">8:00 PM · 45 min · Priya</div>
+            </div>
+            <div class="y-class-spots">12 spots</div>
+          </div>
+        </div>
+        <button class="y-btn-main" style="width:100%;margin-top:20px;border-radius:8px">Book a Class</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="y-features" style="padding-top:80px">
+    <div class="y-section-title">
+      <p class="y-section-eyebrow">Why Serenity Flow</p>
+      <h2>More than just a studio</h2>
+      <p>A community built on breath, movement, and belonging — for every stage of your yoga journey.</p>
+    </div>
+    <div class="y-features-grid">
+      <div class="y-feature">
+        <div class="y-feature-icon">🌿</div>
+        <div class="y-feature-title">All Levels Welcome</div>
+        <p class="y-feature-desc">From your very first downward dog to advanced inversions — we have classes designed for where you are right now.</p>
+      </div>
+      <div class="y-feature">
+        <div class="y-feature-icon">👩‍🏫</div>
+        <div class="y-feature-title">Expert Instructors</div>
+        <p class="y-feature-desc">All teachers are certified with 200–500 hour training and years of teaching experience in diverse styles.</p>
+      </div>
+      <div class="y-feature">
+        <div class="y-feature-icon">🏛️</div>
+        <div class="y-feature-title">Beautiful Spaces</div>
+        <p class="y-feature-desc">Thoughtfully designed studios with natural light, quality mats, props, and calming atmospheres.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="y-classes">
+    <div class="y-classes-inner">
+      <div class="y-section-title">
+        <p class="y-section-eyebrow">Explore Classes</p>
+        <h2>Find your practice</h2>
+      </div>
+      <div class="y-classes-grid" style="margin-top:48px">
+        <div class="y-class-card">
+          <div class="y-class-color"></div>
+          <div class="y-class-content">
+            <div class="y-class-level">All Levels · 60 min</div>
+            <div class="y-class-title">Hatha Yoga</div>
+            <div class="y-class-info">The foundation of all yoga. Focus on alignment, breath and holding poses with steady awareness.</div>
+            <div class="y-class-meta"><span>🕐 Daily</span><span>👤 Max 15</span><span>💰 ₹500/class</span></div>
+          </div>
+        </div>
+        <div class="y-class-card">
+          <div class="y-class-color"></div>
+          <div class="y-class-content">
+            <div class="y-class-level">Intermediate · 75 min</div>
+            <div class="y-class-title">Vinyasa Flow</div>
+            <div class="y-class-info">Dynamic sequences linking breath and movement. Build strength, flexibility and cardiovascular endurance.</div>
+            <div class="y-class-meta"><span>🕐 Mon/Wed/Fri</span><span>👤 Max 12</span><span>💰 ₹650/class</span></div>
+          </div>
+        </div>
+        <div class="y-class-card">
+          <div class="y-class-color"></div>
+          <div class="y-class-content">
+            <div class="y-class-level">All Levels · 90 min</div>
+            <div class="y-class-title">Yin & Restore</div>
+            <div class="y-class-info">Long, passive holds that target the connective tissue. Perfect for deep stretching and stress relief.</div>
+            <div class="y-class-meta"><span>🕐 Tue/Thu/Sun</span><span>👤 Max 18</span><span>💰 ₹550/class</span></div>
+          </div>
+        </div>
+        <div class="y-class-card">
+          <div class="y-class-color"></div>
+          <div class="y-class-content">
+            <div class="y-class-level">Beginner-friendly · 45 min</div>
+            <div class="y-class-title">Guided Meditation</div>
+            <div class="y-class-info">Stillness, breathwork and mindfulness techniques. Reduce anxiety, improve focus and sleep quality.</div>
+            <div class="y-class-meta"><span>🕐 Daily evenings</span><span>👤 Max 20</span><span>💰 ₹400/class</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="y-pricing">
+    <div class="y-section-title">
+      <p class="y-section-eyebrow">Membership</p>
+      <h2>Simple, flexible pricing</h2>
+      <p>No hidden fees. Cancel anytime. Your first class is always free.</p>
+    </div>
+    <div class="y-pricing-grid">
+      <div class="y-plan">
+        <div class="y-plan-name">Drop-in</div>
+        <div class="y-plan-price">₹600 <span>/ class</span></div>
+        <div class="y-plan-desc">Perfect if you're just trying us out or visiting Mumbai.</div>
+        <ul class="y-plan-features">
+          <li>Any single class</li>
+          <li>Mat & props included</li>
+          <li>No commitment</li>
+        </ul>
+        <button class="y-plan-btn">Book a Class</button>
+      </div>
+      <div class="y-plan featured">
+        <div class="y-plan-name">Monthly Unlimited</div>
+        <div class="y-plan-price">₹3,500 <span>/ month</span></div>
+        <div class="y-plan-desc">Our most popular plan. Practice as often as you want.</div>
+        <ul class="y-plan-features">
+          <li>Unlimited classes</li>
+          <li>Both studio locations</li>
+          <li>Guest pass each month</li>
+          <li>10% off workshops</li>
+        </ul>
+        <button class="y-plan-btn">Get Started</button>
+      </div>
+      <div class="y-plan">
+        <div class="y-plan-name">10-Class Pack</div>
+        <div class="y-plan-price">₹4,800 <span>/ pack</span></div>
+        <div class="y-plan-desc">Great value if you practice 2–3 times a week.</div>
+        <ul class="y-plan-features">
+          <li>10 class credits</li>
+          <li>Valid for 3 months</li>
+          <li>Shareable with family</li>
+        </ul>
+        <button class="y-plan-btn">Buy Pack</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== DEMO 4: BAKERY ==================== -->
+<div id="bakery" class="page">
+  <nav class="k-nav">
+    <div class="k-logo">Daily <span>Loaf</span></div>
+    <div class="k-nav-links">
+      <a>Menu</a>
+      <a>Our Story</a>
+      <a>Pre-order</a>
+      <a>Find Us</a>
+    </div>
+    <button class="k-order-btn">Order Now</button>
+    <button class="mob-menu-btn" onclick="toggleDrawer('k-drawer')" aria-label="Open menu">
+      <span style="background:#8b4513"></span><span style="background:#8b4513"></span><span style="background:#8b4513"></span>
+    </button>
+  </nav>
+  <div class="mob-nav-drawer" id="k-drawer" style="background:rgba(253,246,240,.98)">
+    <a style="color:#5c2e0a;font-family:'Pacifico',cursive;font-size:22px" onclick="toggleDrawer('k-drawer')">Menu</a>
+    <a style="color:#5c2e0a;font-family:'Pacifico',cursive;font-size:22px" onclick="toggleDrawer('k-drawer')">Our Story</a>
+    <a style="color:#5c2e0a;font-family:'Pacifico',cursive;font-size:22px" onclick="toggleDrawer('k-drawer')">Pre-order</a>
+    <a style="color:#5c2e0a;font-family:'Pacifico',cursive;font-size:22px" onclick="toggleDrawer('k-drawer')">Find Us</a>
+    <button style="padding:13px 36px;background:#d4845a;color:#fff;border:none;border-radius:30px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Quicksand',sans-serif" onclick="toggleDrawer('k-drawer')">Order Now</button>
+    <button style="background:none;border:none;color:#aaa;font-size:28px;cursor:pointer;margin-top:8px" onclick="toggleDrawer('k-drawer')">✕</button>
+  </div>
+
+  <section class="k-hero">
+    <div class="k-hero-bg-left"></div>
+    <div class="k-hero-content">
+      <div class="k-hero-badge">🌅 Fresh every morning from 7am</div>
+      <h1>Baked with<br><span>love</span> &amp; butter</h1>
+      <p class="k-hero-sub">Artisan breads, pastries and cakes made from scratch every single morning — the way your grandmother wished she could.</p>
+      <div class="k-hero-btns">
+        <button class="k-btn-main">Explore Menu</button>
+        <button class="k-btn-sec">Pre-order a Cake</button>
+      </div>
+      <div class="k-hero-pills">
+        <div class="k-pill"><div class="k-pill-dot"></div>No preservatives</div>
+        <div class="k-pill"><div class="k-pill-dot" style="background:#7a8e9e"></div>Organic flour</div>
+        <div class="k-pill"><div class="k-pill-dot" style="background:#8a7ab5"></div>Vegan options</div>
+        <div class="k-pill"><div class="k-pill-dot" style="background:#7a9e7e"></div>Gluten-free range</div>
+      </div>
+    </div>
+    <div class="k-hero-img-area">🍞</div>
+  </section>
+
+  <section class="k-featured">
+    <div class="k-section-header">
+      <p class="k-eyebrow">Fresh Today</p>
+      <h2>Today's Bestsellers</h2>
+    </div>
+    <div class="k-products-grid">
+      <div class="k-product">
+        <div class="k-product-img">🍞</div>
+        <div class="k-product-body">
+          <div class="k-product-name">Country Sourdough</div>
+          <div class="k-product-desc">72-hour cold ferment, open crumb, crispy crust. Our flagship loaf.</div>
+          <div class="k-product-footer">
+            <div class="k-product-price">₹280</div>
+            <button class="k-add-btn">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="k-product">
+        <div class="k-product-img">🥐</div>
+        <div class="k-product-body">
+          <div class="k-product-name">Butter Croissant</div>
+          <div class="k-product-desc">144 layers of French butter pastry. Crispy outside, pillowy inside.</div>
+          <div class="k-product-footer">
+            <div class="k-product-price">₹120</div>
+            <button class="k-add-btn">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="k-product">
+        <div class="k-product-img">🎂</div>
+        <div class="k-product-body">
+          <div class="k-product-name">Lemon Almond Cake</div>
+          <div class="k-product-desc">Almond frangipane, lemon curd, candied zest. Perfect for gifting.</div>
+          <div class="k-product-footer">
+            <div class="k-product-price">₹850</div>
+            <button class="k-add-btn">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="k-product">
+        <div class="k-product-img">🍩</div>
+        <div class="k-product-body">
+          <div class="k-product-name">Cinnamon Scroll</div>
+          <div class="k-product-desc">Soft enriched dough, brown butter & cinnamon, cream cheese glaze.</div>
+          <div class="k-product-footer">
+            <div class="k-product-price">₹160</div>
+            <button class="k-add-btn">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="k-story">
+    <div>
+      <p class="k-eyebrow">Our Story</p>
+      <h2>Started in a tiny<br>kitchen on a rainy<br>Tuesday</h2>
+      <p>Pooja Mehta started Daily Loaf in 2020 when lockdown meant she had nothing but time, flour, and a sourdough starter she named Gerald.</p>
+      <p>What began as a passion project shared with neighbours quickly grew into Mumbai's most-loved neighbourhood bakery — now serving over 200 regulars every morning.</p>
+      <div class="k-story-stats">
+        <div class="k-story-stat">
+          <div class="k-story-stat-num">200+</div>
+          <div class="k-story-stat-label">Daily regulars</div>
+        </div>
+        <div class="k-story-stat">
+          <div class="k-story-stat-num">40+</div>
+          <div class="k-story-stat-label">Recipes on menu</div>
+        </div>
+        <div class="k-story-stat">
+          <div class="k-story-stat-num">5★</div>
+          <div class="k-story-stat-label">Google rating</div>
+        </div>
+      </div>
+    </div>
+    <div class="k-story-img">"Made with love,<br>eaten with joy"</div>
+  </section>
+
+  <section class="k-newsletter">
+    <h2>Never miss a fresh batch</h2>
+    <p>Get the weekly menu, specials and pre-order reminders delivered to your inbox.</p>
+    <div class="k-nl-form">
+      <input class="k-nl-input" type="email" placeholder="your@email.com">
+      <button class="k-nl-submit">Subscribe →</button>
+    </div>
+  </section>
+</div>
+
+<script>
+function toggleDrawer(id){
+  var d=document.getElementById(id);
+  d.classList.toggle('open');
+  document.body.style.overflow=d.classList.contains('open')?'hidden':'';
+}
+
+function showPage(id){
+  ['r-drawer','b-drawer','y-drawer','k-drawer'].forEach(function(d){
+    var el=document.getElementById(d);
+    if(el) el.classList.remove('open');
+  });
+  document.body.style.overflow='';
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  var btn=document.getElementById('backBtn');
+  if(id==='portfolio'){
+    btn.classList.remove('visible','dark');
+  } else {
+    btn.classList.add('visible');
+    if(id==='yoga'||id==='bakery') btn.classList.add('dark');
+    else btn.classList.remove('dark');
+  }
+}
+
+function setMenuTab(el,idx){
+  document.querySelectorAll('.r-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  var menus=[
+    [
+      {name:'Burrata & Heritage Tomatoes',desc:'Creamy buffalo burrata, slow-roasted vine tomatoes, aged balsamic, micro basil',price:'₹680',badge:'Vegetarian'},
+      {name:'Seared Scallops',desc:'Hand-dived scallops, cauliflower purée, crispy capers, smoked paprika oil',price:'₹920',badge:'Signature'},
+      {name:'Roasted Bone Marrow',desc:'Grass-fed bone marrow, parsley salad, sourdough toast, sea salt flakes',price:'₹780'},
+      {name:'Charred Heirloom Beetroot',desc:'Roasted golden beetroot, whipped goat curd, walnut crumble, dill oil',price:'₹560',badge:'Vegan'},
+    ],[
+      {name:'Aged Ribeye (300g)',desc:'28-day dry-aged Irish ribeye, bone marrow butter, roasted garlic jus',price:'₹2,800',badge:'Chef\'s Pick'},
+      {name:'Whole Roasted Chicken',desc:'Free-range chicken, preserved lemon, herb butter, seasonal vegetables',price:'₹1,600'},
+      {name:'Wild Mushroom Risotto',desc:'Arborio rice, mixed wild mushrooms, aged parmesan, truffle oil',price:'₹1,100',badge:'Vegetarian'},
+      {name:'Line-caught Seabass',desc:'Pan-seared seabass, fennel purée, brown butter, samphire, fish roe',price:'₹1,800'},
+    ],[
+      {name:'Warm Chocolate Fondant',desc:'Valrhona 70% chocolate, vanilla ice cream, sea salt caramel',price:'₹480',badge:'Signature'},
+      {name:'Crème Brûlée',desc:'Classic vanilla bean custard, crunchy caramel top, seasonal berries',price:'₹380'},
+      {name:'Cheese Board',desc:'Selection of three fine cheeses, quince paste, walnut crackers, honeycomb',price:'₹780'},
+      {name:'Seasonal Tart',desc:'Today: passion fruit & mango tart, coconut cream, lime zest',price:'₹420'},
+    ],[
+      {name:'Negroni',desc:'Tanqueray gin, Campari, Martini Rosso, orange peel — stirred not shaken',price:'₹680'},
+      {name:'Old Fashioned',desc:'Buffalo Trace bourbon, angostura bitters, demerara syrup, orange twist',price:'₹720'},
+      {name:'Natural Wine Selection',desc:'Ask your sommelier for today\'s curated selection of biodynamic wines',price:'From ₹850'},
+      {name:'Seedlip Garden 108',desc:'Distilled non-alcoholic spirit with elderflower tonic, cucumber, mint',price:'₹480',badge:'NA'},
+    ]
+  ];
+  var grid=document.getElementById('menuGrid');
+  grid.innerHTML=menus[idx].map(function(item){
+    return '<div class="r-menu-item"><div class="r-item-info"><div class="r-item-name">'+item.name+'</div><div class="r-item-desc">'+item.desc+'</div>'+(item.badge?'<div class="r-item-badge">'+item.badge+'</div>':'')+'</div><div class="r-item-price">'+item.price+'</div></div>';
+  }).join('');
+}
+</script>
+</body>
+</html>
