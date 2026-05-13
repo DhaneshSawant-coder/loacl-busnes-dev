@@ -673,19 +673,19 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
   <nav class="r-nav">
     <div class="r-logo">Ember & Oak</div>
     <div class="r-nav-links">
-      <a>Menu</a>
-      <a>Our Story</a>
-      <a>Events</a>
-      <a>Gallery</a>
+      <a onclick="scrollTo('r-menu')">Menu</a>
+      <a onclick="scrollTo('r-story')">Our Story</a>
+      <a onclick="scrollTo('r-reserve')">Events</a>
+      <a onclick="scrollTo('r-reserve')">Gallery</a>
     </div>
-    <button class="r-reserve-btn">Reserve a Table</button>
+    <button class="r-reserve-btn" onclick="scrollTo('r-reserve')">Reserve a Table</button>
     <button class="mob-menu-btn" onclick="toggleDrawer('r-drawer')" aria-label="Open menu">
       <span style="background:#e8d5a3"></span><span style="background:#e8d5a3"></span><span style="background:#e8d5a3"></span>
     </button>
   </nav>
   <div class="mob-nav-drawer" id="r-drawer" style="background:rgba(14,10,5,.97)">
-    <a style="color:#e8d5a3;font-family:'Playfair Display',serif" onclick="toggleDrawer('r-drawer')">Menu</a>
-    <a style="color:#e8d5a3;font-family:'Playfair Display',serif" onclick="toggleDrawer('r-drawer')">Our Story</a>
+    <a style="color:#e8d5a3;font-family:'Playfair Display',serif" onclick="toggleDrawer('r-drawer');scrollTo('r-menu')">Menu</a>
+    <a style="color:#e8d5a3;font-family:'Playfair Display',serif" onclick="toggleDrawer('r-drawer');scrollTo('r-story')">Our Story</a>
     <a style="color:#e8d5a3;font-family:'Playfair Display',serif" onclick="toggleDrawer('r-drawer')">Events</a>
     <a style="color:#e8d5a3;font-family:'Playfair Display',serif" onclick="toggleDrawer('r-drawer')">Gallery</a>
     <button style="padding:13px 36px;background:#c9a84c;color:#0e0a05;font-size:14px;border:none;cursor:pointer;font-family:'Lato',sans-serif" onclick="toggleDrawer('r-drawer')">Reserve a Table</button>
@@ -720,7 +720,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
     </div>
   </section>
 
-  <section class="r-menu-section">
+  <section class="r-menu-section" id="r-menu">
     <div class="r-section-title">
       <p class="r-section-eyebrow">Our Offerings</p>
       <h2>Seasonal Menu</h2>
@@ -766,13 +766,13 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
     </div>
   </section>
 
-  <section class="r-story">
+  <section class="r-story" id="r-story">
     <div class="r-story-text">
       <p class="r-section-eyebrow" style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#c9a84c;margin-bottom:16px">Our Philosophy</p>
       <h2>Cooking with<br>intention, serving<br>with soul</h2>
       <p>Every dish at Ember & Oak begins with a conversation — with farmers, fishermen, and foragers who share our obsession with quality.</p>
       <p>Chef Aryan Kapoor trained in Lyon before returning to Mumbai to build something rooted in Indian soil but speaking a universal culinary language.</p>
-      <button class="r-reserve-btn" style="margin-top:32px;padding:14px 36px">Meet Our Chef</button>
+      <button class="r-reserve-btn" style="margin-top:32px;padding:14px 36px" onclick="showModal('chef-modal')">Meet Our Chef</button>
     </div>
     <div class="r-story-img">
       <div class="r-story-img-inner"></div>
@@ -783,7 +783,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
     </div>
   </section>
 
-  <section class="r-reserve">
+  <section class="r-reserve" id="r-reserve">
     <p class="r-section-eyebrow" style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#c9a84c;margin-bottom:16px">Book Your Table</p>
     <h2>Join us for dinner</h2>
     <p>We'd love to have you. Reservations recommended, especially on weekends.</p>
@@ -791,7 +791,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
       <input class="r-input" type="text" placeholder="Your Name">
       <input class="r-input" type="date" style="background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);color:#e8d5a3;padding:14px 20px;font-size:14px;flex:1;min-width:150px;outline:none">
       <input class="r-input" type="text" placeholder="Guests (2-10)">
-      <button class="r-submit">Reserve Now</button>
+      <button class="r-submit" onclick="handleReserve(event)">Reserve Now</button>
     </div>
   </section>
 </div>
@@ -804,22 +804,22 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
       <div class="b-logo-text">The Sharp Edge</div>
     </div>
     <div class="b-nav-links">
-      <a>Services</a>
-      <a>Barbers</a>
-      <a>Gallery</a>
-      <a>Pricing</a>
+      <a onclick="scrollTo('b-services')">Services</a>
+      <a onclick="scrollTo('b-reviews')">Barbers</a>
+      <a onclick="scrollTo('b-gallery')">Gallery</a>
+      <a onclick="scrollTo('b-services')">Pricing</a>
     </div>
-    <button class="b-book-btn">Book Now</button>
+    <button class="b-book-btn" onclick="showModal('book-modal')">Book Now</button>
     <button class="mob-menu-btn" onclick="toggleDrawer('b-drawer')" aria-label="Open menu">
       <span style="background:#111"></span><span style="background:#111"></span><span style="background:#111"></span>
     </button>
   </nav>
   <div class="mob-nav-drawer" id="b-drawer" style="background:#fff">
-    <a style="color:#111;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em" onclick="toggleDrawer('b-drawer')">Services</a>
+    <a style="color:#111;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em" onclick="toggleDrawer('b-drawer');scrollTo('b-services')">Services</a>
     <a style="color:#111;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em" onclick="toggleDrawer('b-drawer')">Barbers</a>
     <a style="color:#111;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em" onclick="toggleDrawer('b-drawer')">Gallery</a>
     <a style="color:#111;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.12em" onclick="toggleDrawer('b-drawer')">Pricing</a>
-    <button style="padding:13px 40px;background:#e63946;color:#fff;font-family:'Oswald',sans-serif;font-size:14px;border:none;cursor:pointer;letter-spacing:.12em;text-transform:uppercase" onclick="toggleDrawer('b-drawer')">Book Now</button>
+    <button style="padding:13px 40px;background:#e63946;color:#fff;font-family:'Oswald',sans-serif;font-size:14px;border:none;cursor:pointer;letter-spacing:.12em;text-transform:uppercase" onclick="toggleDrawer('b-drawer');showModal('book-modal')">Book Now</button>
     <button style="background:none;border:none;color:#aaa;font-size:28px;cursor:pointer;margin-top:8px" onclick="toggleDrawer('b-drawer')">✕</button>
   </div>
 
@@ -829,8 +829,8 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
       <h1>Look Sharp.<br><span>Feel Sharp.</span></h1>
       <p>Mumbai's finest barbershop experience. Traditional techniques, modern style, zero compromise.</p>
       <div class="b-hero-ctas">
-        <button class="b-cta-main">Book Appointment</button>
-        <button class="b-cta-sec">View Services</button>
+        <button class="b-cta-main" onclick="showModal('book-modal')">Book Appointment</button>
+        <button class="b-cta-sec" onclick="scrollTo('b-services')">View Services</button>
       </div>
       <div class="b-hero-stats">
         <div class="b-stat">
@@ -856,7 +856,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
     </div>
   </section>
 
-  <section class="b-services">
+  <section class="b-services" id="b-services">
     <div class="b-section-header">
       <h2>Our <span>Services</span></h2>
       <p style="font-size:14px;color:#888;max-width:280px;line-height:1.6">Every cut is executed with precision. Walk in, walk out confident.</p>
@@ -901,13 +901,13 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
     </div>
   </section>
 
-  <div class="b-gallery">
+  <div class="b-gallery" id="b-gallery">
     <div class="b-gal-item">Photo Gallery</div>
     <div class="b-gal-item">Our Shop</div>
     <div class="b-gal-item">Our Work</div>
   </div>
 
-  <section class="b-testimonials">
+  <section class="b-testimonials" id="b-reviews">
     <div class="b-section-header">
       <h2>What <span>clients</span><br>are saying</h2>
     </div>
@@ -939,12 +939,12 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
   <nav class="y-nav">
     <div class="y-logo">Serenity <span>Flow</span></div>
     <div class="y-nav-links">
-      <a>Classes</a>
-      <a>Instructors</a>
-      <a>Schedule</a>
-      <a>Pricing</a>
+      <a onclick="scrollTo('y-classes')">Classes</a>
+      <a onclick="scrollTo('y-about')">Instructors</a>
+      <a onclick="scrollTo('y-classes')">Schedule</a>
+      <a onclick="scrollTo('y-pricing')">Pricing</a>
     </div>
-    <button class="y-join-btn">Start Free Trial</button>
+    <button class="y-join-btn" onclick="showModal('trial-modal')">Start Free Trial</button>
     <button class="mob-menu-btn" onclick="toggleDrawer('y-drawer')" aria-label="Open menu">
       <span style="background:#3d5c3f"></span><span style="background:#3d5c3f"></span><span style="background:#3d5c3f"></span>
     </button>
@@ -954,7 +954,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
     <a style="color:#2a3c2b;font-family:'DM Serif Display',serif;font-size:26px" onclick="toggleDrawer('y-drawer')">Instructors</a>
     <a style="color:#2a3c2b;font-family:'DM Serif Display',serif;font-size:26px" onclick="toggleDrawer('y-drawer')">Schedule</a>
     <a style="color:#2a3c2b;font-family:'DM Serif Display',serif;font-size:26px" onclick="toggleDrawer('y-drawer')">Pricing</a>
-    <button style="padding:13px 36px;background:#3d5c3f;color:#f4f1ec;border:none;border-radius:30px;font-size:15px;cursor:pointer" onclick="toggleDrawer('y-drawer')">Start Free Trial</button>
+    <button style="padding:13px 36px;background:#3d5c3f;color:#f4f1ec;border:none;border-radius:30px;font-size:15px;cursor:pointer" onclick="toggleDrawer('y-drawer');showModal('trial-modal')">Start Free Trial</button>
     <button style="background:none;border:none;color:#aaa;font-size:28px;cursor:pointer;margin-top:8px" onclick="toggleDrawer('y-drawer')">✕</button>
   </div>
 
@@ -966,8 +966,8 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
       <h1>Find your<br><em>flow</em>,<br>find yourself</h1>
       <p class="y-hero-sub">A warm, welcoming yoga studio for all levels. From beginner to advanced — every body belongs here.</p>
       <div class="y-hero-actions">
-        <button class="y-btn-main">Explore Classes</button>
-        <span class="y-btn-link" style="cursor:pointer">View Schedule</span>
+        <button class="y-btn-main" onclick="scrollTo('y-classes')">Explore Classes</button>
+        <span class="y-btn-link" style="cursor:pointer" onclick="scrollTo('y-classes')">View Schedule</span>
       </div>
       <div class="y-hero-pills">
         <div class="y-pill"><div class="y-pill-dot"></div>Hatha Yoga</div>
@@ -1009,12 +1009,12 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
             <div class="y-class-spots">12 spots</div>
           </div>
         </div>
-        <button class="y-btn-main" style="width:100%;margin-top:20px;border-radius:8px">Book a Class</button>
+        <button class="y-btn-main" style="width:100%;margin-top:20px;border-radius:8px" onclick="showModal('trial-modal')">Book a Class</button>
       </div>
     </div>
   </section>
 
-  <section class="y-features" style="padding-top:80px">
+  <section class="y-features" id="y-about" style="padding-top:80px">
     <div class="y-section-title">
       <p class="y-section-eyebrow">Why Serenity Flow</p>
       <h2>More than just a studio</h2>
@@ -1039,7 +1039,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
     </div>
   </section>
 
-  <section class="y-classes">
+  <section class="y-classes" id="y-classes">
     <div class="y-classes-inner">
       <div class="y-section-title">
         <p class="y-section-eyebrow">Explore Classes</p>
@@ -1086,7 +1086,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
     </div>
   </section>
 
-  <section class="y-pricing">
+  <section class="y-pricing" id="y-pricing">
     <div class="y-section-title">
       <p class="y-section-eyebrow">Membership</p>
       <h2>Simple, flexible pricing</h2>
@@ -1102,7 +1102,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
           <li>Mat & props included</li>
           <li>No commitment</li>
         </ul>
-        <button class="y-plan-btn">Book a Class</button>
+        <button class="y-plan-btn" onclick="showModal('trial-modal')">Book a Class</button>
       </div>
       <div class="y-plan featured">
         <div class="y-plan-name">Monthly Unlimited</div>
@@ -1114,7 +1114,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
           <li>Guest pass each month</li>
           <li>10% off workshops</li>
         </ul>
-        <button class="y-plan-btn">Get Started</button>
+        <button class="y-plan-btn" onclick="showModal('trial-modal')">Get Started</button>
       </div>
       <div class="y-plan">
         <div class="y-plan-name">10-Class Pack</div>
@@ -1125,7 +1125,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
           <li>Valid for 3 months</li>
           <li>Shareable with family</li>
         </ul>
-        <button class="y-plan-btn">Buy Pack</button>
+        <button class="y-plan-btn" onclick="showModal('trial-modal')">Buy Pack</button>
       </div>
     </div>
   </section>
@@ -1136,12 +1136,12 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
   <nav class="k-nav">
     <div class="k-logo">Daily <span>Loaf</span></div>
     <div class="k-nav-links">
-      <a>Menu</a>
-      <a>Our Story</a>
-      <a>Pre-order</a>
-      <a>Find Us</a>
+      <a onclick="scrollTo('k-menu')">Menu</a>
+      <a onclick="scrollTo('k-story')">Our Story</a>
+      <a onclick="showModal('preorder-modal')">Pre-order</a>
+      <a onclick="showModal('findus-modal')">Find Us</a>
     </div>
-    <button class="k-order-btn">Order Now</button>
+    <button class="k-order-btn" onclick="scrollTo('k-menu')">Order Now</button>
     <button class="mob-menu-btn" onclick="toggleDrawer('k-drawer')" aria-label="Open menu">
       <span style="background:#8b4513"></span><span style="background:#8b4513"></span><span style="background:#8b4513"></span>
     </button>
@@ -1151,7 +1151,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
     <a style="color:#5c2e0a;font-family:'Pacifico',cursive;font-size:22px" onclick="toggleDrawer('k-drawer')">Our Story</a>
     <a style="color:#5c2e0a;font-family:'Pacifico',cursive;font-size:22px" onclick="toggleDrawer('k-drawer')">Pre-order</a>
     <a style="color:#5c2e0a;font-family:'Pacifico',cursive;font-size:22px" onclick="toggleDrawer('k-drawer')">Find Us</a>
-    <button style="padding:13px 36px;background:#d4845a;color:#fff;border:none;border-radius:30px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Quicksand',sans-serif" onclick="toggleDrawer('k-drawer')">Order Now</button>
+    <button style="padding:13px 36px;background:#d4845a;color:#fff;border:none;border-radius:30px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Quicksand',sans-serif" onclick="toggleDrawer('k-drawer');scrollTo('k-menu')">Order Now</button>
     <button style="background:none;border:none;color:#aaa;font-size:28px;cursor:pointer;margin-top:8px" onclick="toggleDrawer('k-drawer')">✕</button>
   </div>
 
@@ -1162,8 +1162,8 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
       <h1>Baked with<br><span>love</span> &amp; butter</h1>
       <p class="k-hero-sub">Artisan breads, pastries and cakes made from scratch every single morning — the way your grandmother wished she could.</p>
       <div class="k-hero-btns">
-        <button class="k-btn-main">Explore Menu</button>
-        <button class="k-btn-sec">Pre-order a Cake</button>
+        <button class="k-btn-main" onclick="scrollTo('k-menu')">Explore Menu</button>
+        <button class="k-btn-sec" onclick="showModal('preorder-modal')">Pre-order a Cake</button>
       </div>
       <div class="k-hero-pills">
         <div class="k-pill"><div class="k-pill-dot"></div>No preservatives</div>
@@ -1175,7 +1175,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
     <div class="k-hero-img-area">🍞</div>
   </section>
 
-  <section class="k-featured">
+  <section class="k-featured" id="k-menu">
     <div class="k-section-header">
       <p class="k-eyebrow">Fresh Today</p>
       <h2>Today's Bestsellers</h2>
@@ -1188,7 +1188,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
           <div class="k-product-desc">72-hour cold ferment, open crumb, crispy crust. Our flagship loaf.</div>
           <div class="k-product-footer">
             <div class="k-product-price">₹280</div>
-            <button class="k-add-btn">+</button>
+            <button class="k-add-btn" onclick="addToCart(this)">+</button>
           </div>
         </div>
       </div>
@@ -1199,7 +1199,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
           <div class="k-product-desc">144 layers of French butter pastry. Crispy outside, pillowy inside.</div>
           <div class="k-product-footer">
             <div class="k-product-price">₹120</div>
-            <button class="k-add-btn">+</button>
+            <button class="k-add-btn" onclick="addToCart(this)">+</button>
           </div>
         </div>
       </div>
@@ -1210,7 +1210,7 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
           <div class="k-product-desc">Almond frangipane, lemon curd, candied zest. Perfect for gifting.</div>
           <div class="k-product-footer">
             <div class="k-product-price">₹850</div>
-            <button class="k-add-btn">+</button>
+            <button class="k-add-btn" onclick="addToCart(this)">+</button>
           </div>
         </div>
       </div>
@@ -1221,14 +1221,14 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
           <div class="k-product-desc">Soft enriched dough, brown butter & cinnamon, cream cheese glaze.</div>
           <div class="k-product-footer">
             <div class="k-product-price">₹160</div>
-            <button class="k-add-btn">+</button>
+            <button class="k-add-btn" onclick="addToCart(this)">+</button>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="k-story">
+  <section class="k-story" id="k-story">
     <div>
       <p class="k-eyebrow">Our Story</p>
       <h2>Started in a tiny<br>kitchen on a rainy<br>Tuesday</h2>
@@ -1252,17 +1252,284 @@ body{font-family:'Outfit',sans-serif;overflow-x:hidden}
     <div class="k-story-img">"Made with love,<br>eaten with joy"</div>
   </section>
 
-  <section class="k-newsletter">
+  <section class="k-newsletter" id="k-newsletter">
     <h2>Never miss a fresh batch</h2>
     <p>Get the weekly menu, specials and pre-order reminders delivered to your inbox.</p>
     <div class="k-nl-form">
       <input class="k-nl-input" type="email" placeholder="your@email.com">
-      <button class="k-nl-submit">Subscribe →</button>
+      <button class="k-nl-submit" onclick="handleSubscribe(event)">Subscribe →</button>
     </div>
   </section>
 </div>
 
+
+<!-- ===== MODALS & TOAST SYSTEM ===== -->
+<style>
+/* Toast */
+#toast{position:fixed;bottom:28px;right:28px;z-index:99999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast-item{background:#1a1a14;color:#f5f0e8;padding:14px 22px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:14px;border-left:3px solid #c9a84c;box-shadow:0 8px 24px rgba(0,0,0,.3);transform:translateX(120%);transition:transform .35s cubic-bezier(.34,1.56,.64,1);max-width:300px;pointer-events:auto}
+.toast-item.show{transform:translateX(0)}
+
+/* Modal backdrop */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:9000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:16px;padding:40px;max-width:480px;width:100%;position:relative;animation:modalIn .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes modalIn{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{position:absolute;top:16px;right:20px;background:none;border:none;font-size:22px;cursor:pointer;color:#aaa;line-height:1}
+.modal-close:hover{color:#333}
+.modal-title{font-size:22px;font-weight:700;margin-bottom:6px;color:#111}
+.modal-sub{font-size:14px;color:#888;margin-bottom:24px}
+.modal-form-group{margin-bottom:16px}
+.modal-form-group label{display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#555;margin-bottom:6px}
+.modal-input{width:100%;padding:11px 14px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s}
+.modal-input:focus{border-color:#c9a84c}
+.modal-select{width:100%;padding:11px 14px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:'Outfit',sans-serif;outline:none;background:#fff;cursor:pointer}
+.modal-submit{width:100%;padding:13px;background:#111;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.05em;transition:all .2s;margin-top:8px}
+.modal-submit:hover{background:#333;transform:translateY(-1px)}
+.modal-submit.gold{background:#c9a84c}
+.modal-submit.gold:hover{background:#d4b060}
+.modal-submit.red{background:#e63946}
+.modal-submit.red:hover{background:#c0303c}
+.modal-submit.green{background:#3d5c3f}
+.modal-submit.green:hover{background:#2d4a2f}
+.modal-submit.brown{background:#8b4513}
+.modal-submit.brown:hover{background:#722e0e}
+.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chef-bio{display:flex;gap:20px;align-items:flex-start;margin-bottom:20px}
+.chef-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#3d1f08,#c9a84c);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px}
+.chef-name{font-size:18px;font-weight:700;color:#111}
+.chef-title{font-size:13px;color:#888;margin-top:2px}
+.chef-quote{font-size:14px;color:#555;line-height:1.7;font-style:italic;border-left:3px solid #c9a84c;padding-left:16px;margin:16px 0}
+@media(max-width:600px){.modal-box{padding:28px 20px}.modal-row{grid-template-columns:1fr}}
+</style>
+
+<div id="toast"></div>
+
+<!-- Reserve Table Modal (Restaurant) -->
+<div class="modal-overlay" id="reserve-modal" onclick="closeModalOutside(event,'reserve-modal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('reserve-modal')">✕</button>
+    <div class="modal-title">🍽️ Reserve a Table</div>
+    <div class="modal-sub">Ember & Oak — Colaba, Mumbai</div>
+    <div class="modal-row">
+      <div class="modal-form-group"><label>Your Name</label><input class="modal-input" placeholder="Full name" id="res-name"></div>
+      <div class="modal-form-group"><label>Phone</label><input class="modal-input" placeholder="+91 98765 43210" id="res-phone"></div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-form-group"><label>Date</label><input class="modal-input" type="date" id="res-date"></div>
+      <div class="modal-form-group"><label>Time</label>
+        <select class="modal-select" id="res-time">
+          <option>6:00 PM</option><option>6:30 PM</option><option>7:00 PM</option>
+          <option>7:30 PM</option><option>8:00 PM</option><option>8:30 PM</option>
+          <option>9:00 PM</option><option>9:30 PM</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-form-group"><label>Guests</label>
+      <select class="modal-select" id="res-guests">
+        <option>2 guests</option><option>3 guests</option><option>4 guests</option>
+        <option>5 guests</option><option>6 guests</option><option>7–10 guests (call us)</option>
+      </select>
+    </div>
+    <div class="modal-form-group"><label>Special Requests</label><input class="modal-input" placeholder="Allergies, celebrations, seating preferences…" id="res-notes"></div>
+    <button class="modal-submit gold" onclick="submitReservation()">Confirm Reservation</button>
+  </div>
+</div>
+
+<!-- Chef Bio Modal -->
+<div class="modal-overlay" id="chef-modal" onclick="closeModalOutside(event,'chef-modal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('chef-modal')">✕</button>
+    <div class="chef-bio">
+      <div class="chef-avatar">👨‍🍳</div>
+      <div><div class="chef-name">Chef Aryan Kapoor</div><div class="chef-title">Head Chef & Co-Founder · Ember & Oak</div></div>
+    </div>
+    <p class="chef-quote">"Every plate tells the story of where it came from. I cook to connect people to the land, the farmer, and the season."</p>
+    <p style="font-size:14px;color:#555;line-height:1.7">Aryan trained at Institut Paul Bocuse in Lyon before returning to Mumbai with a singular vision — to cook food that is rooted in Indian terroir but speaks a universal culinary language.</p>
+    <p style="font-size:14px;color:#555;line-height:1.7;margin-top:12px">He has cooked for the James Beard House in New York, been featured in Condé Nast Traveller, and was named one of Asia's 50 Best emerging chefs in 2023.</p>
+    <button class="modal-submit gold" style="margin-top:20px" onclick="closeModal('chef-modal');document.getElementById('reserve-modal').classList.add('open')">Book a Table With Us</button>
+  </div>
+</div>
+
+<!-- Book Barbershop Modal -->
+<div class="modal-overlay" id="book-modal" onclick="closeModalOutside(event,'book-modal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('book-modal')">✕</button>
+    <div class="modal-title">✂️ Book Appointment</div>
+    <div class="modal-sub">The Sharp Edge — Premium Grooming</div>
+    <div class="modal-row">
+      <div class="modal-form-group"><label>Your Name</label><input class="modal-input" placeholder="Full name" id="book-name"></div>
+      <div class="modal-form-group"><label>Phone</label><input class="modal-input" placeholder="+91 98765 43210" id="book-phone"></div>
+    </div>
+    <div class="modal-form-group"><label>Service</label>
+      <select class="modal-select" id="book-service">
+        <option>Classic Cut — ₹550</option>
+        <option>Fade & Style — ₹750</option>
+        <option>Hot Towel Shave — ₹650</option>
+        <option>Beard Sculpt — ₹450</option>
+        <option>The Works (Full Package) — ₹1,400</option>
+        <option>Kids Cut — ₹350</option>
+      </select>
+    </div>
+    <div class="modal-row">
+      <div class="modal-form-group"><label>Preferred Date</label><input class="modal-input" type="date" id="book-date"></div>
+      <div class="modal-form-group"><label>Preferred Time</label>
+        <select class="modal-select" id="book-time">
+          <option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option>
+          <option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option>
+          <option>5:00 PM</option><option>6:00 PM</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-form-group"><label>Preferred Barber (optional)</label>
+      <select class="modal-select"><option>No preference</option><option>Rahul</option><option>Dev</option><option>Karan</option><option>Nikhil</option></select>
+    </div>
+    <button class="modal-submit red" onclick="submitBooking('book-modal','✂️ Appointment booked! See you soon at The Sharp Edge.')">Confirm Booking</button>
+  </div>
+</div>
+
+<!-- Yoga Trial Modal -->
+<div class="modal-overlay" id="trial-modal" onclick="closeModalOutside(event,'trial-modal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('trial-modal')">✕</button>
+    <div class="modal-title">🌿 Start Your Free Trial</div>
+    <div class="modal-sub">Serenity Flow — Your first class is on us</div>
+    <div class="modal-row">
+      <div class="modal-form-group"><label>Your Name</label><input class="modal-input" placeholder="Full name" id="trial-name"></div>
+      <div class="modal-form-group"><label>Phone / WhatsApp</label><input class="modal-input" placeholder="+91 98765 43210" id="trial-phone"></div>
+    </div>
+    <div class="modal-form-group"><label>Email</label><input class="modal-input" type="email" placeholder="you@email.com" id="trial-email"></div>
+    <div class="modal-form-group"><label>Choose a Class</label>
+      <select class="modal-select" id="trial-class">
+        <option>Morning Hatha — 7:00 AM (Daily)</option>
+        <option>Vinyasa Flow — 10:00 AM (Mon/Wed/Fri)</option>
+        <option>Yin & Restore — 6:30 PM (Tue/Thu/Sun)</option>
+        <option>Guided Meditation — 8:00 PM (Daily)</option>
+      </select>
+    </div>
+    <div class="modal-form-group"><label>Studio Location</label>
+      <select class="modal-select"><option>Bandra West</option><option>Powai</option></select>
+    </div>
+    <button class="modal-submit green" onclick="submitBooking('trial-modal','🌿 Welcome! Your free trial class is confirmed.')">Book Free Class</button>
+  </div>
+</div>
+
+<!-- Bakery Pre-order Modal -->
+<div class="modal-overlay" id="preorder-modal" onclick="closeModalOutside(event,'preorder-modal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('preorder-modal')">✕</button>
+    <div class="modal-title">🎂 Pre-order a Cake</div>
+    <div class="modal-sub">Daily Loaf — Custom cakes take 48hrs notice</div>
+    <div class="modal-row">
+      <div class="modal-form-group"><label>Your Name</label><input class="modal-input" placeholder="Full name" id="pre-name"></div>
+      <div class="modal-form-group"><label>Phone</label><input class="modal-input" placeholder="+91 98765 43210" id="pre-phone"></div>
+    </div>
+    <div class="modal-form-group"><label>Cake Type</label>
+      <select class="modal-select" id="pre-cake">
+        <option>Lemon Almond Cake (6" — serves 8) — ₹850</option>
+        <option>Chocolate Fudge Cake (8" — serves 14) — ₹1,400</option>
+        <option>Carrot & Walnut Cake (6") — ₹950</option>
+        <option>Custom Design Cake — Price on request</option>
+      </select>
+    </div>
+    <div class="modal-row">
+      <div class="modal-form-group"><label>Pick-up Date</label><input class="modal-input" type="date" id="pre-date"></div>
+      <div class="modal-form-group"><label>Pick-up Time</label>
+        <select class="modal-select"><option>8:00 AM</option><option>10:00 AM</option><option>12:00 PM</option><option>3:00 PM</option></select>
+      </div>
+    </div>
+    <div class="modal-form-group"><label>Message on Cake (optional)</label><input class="modal-input" placeholder="Happy Birthday Priya! 🎉" id="pre-msg"></div>
+    <button class="modal-submit brown" onclick="submitBooking('preorder-modal','🎂 Pre-order placed! We'll WhatsApp you to confirm.')">Place Pre-order</button>
+  </div>
+</div>
+
+<!-- Find Us Modal (Bakery) -->
+<div class="modal-overlay" id="findus-modal" onclick="closeModalOutside(event,'findus-modal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('findus-modal')">✕</button>
+    <div class="modal-title">📍 Find Us</div>
+    <div class="modal-sub">Daily Loaf — Artisan Bakery</div>
+    <div style="background:#fdf6f0;border-radius:12px;padding:20px;margin-bottom:16px">
+      <div style="font-weight:700;font-size:15px;color:#5c2e0a;margin-bottom:6px">Daily Loaf Bandra</div>
+      <div style="font-size:14px;color:#7a6050;line-height:1.7">14, Pali Hill Road, Bandra West<br>Mumbai, Maharashtra 400050<br><br>🕐 Mon–Sat: 7am – 7pm<br>🕐 Sunday: 7am – 2pm</div>
+    </div>
+    <div style="background:#fdf6f0;border-radius:12px;padding:20px;margin-bottom:20px">
+      <div style="font-weight:700;font-size:15px;color:#5c2e0a;margin-bottom:6px">Daily Loaf Powai</div>
+      <div style="font-size:14px;color:#7a6050;line-height:1.7">Shop 3, Hiranandani Gardens<br>Powai, Mumbai 400076<br><br>🕐 Mon–Sun: 7am – 8pm</div>
+    </div>
+    <button class="modal-submit brown" onclick="closeModal('findus-modal')">Got It!</button>
+  </div>
+</div>
+
 <script>
+
+function scrollTo(id){
+  var el=document.getElementById(id);
+  if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}
+}
+
+function showModal(id){
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function closeModalOutside(e,id){
+  if(e.target===document.getElementById(id)) closeModal(id);
+}
+
+function showToast(msg,color){
+  color=color||'#c9a84c';
+  var t=document.getElementById('toast');
+  var d=document.createElement('div');
+  d.className='toast-item';
+  d.style.borderLeftColor=color;
+  d.textContent=msg;
+  t.appendChild(d);
+  requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.add('show')})});
+  setTimeout(function(){d.classList.remove('show');setTimeout(function(){d.remove()},400)},3500);
+}
+
+function submitBooking(modalId,successMsg){
+  closeModal(modalId);
+  document.body.style.overflow='';
+  showToast(successMsg);
+}
+
+function submitReservation(){
+  var name=document.getElementById('res-name').value.trim();
+  if(!name){showToast('⚠️ Please enter your name','#e63946');return;}
+  closeModal('reserve-modal');
+  document.body.style.overflow='';
+  showToast('🍽️ Reservation confirmed for '+name+'! See you tonight.');
+}
+
+function handleReserve(e){
+  e.preventDefault();
+  var name=document.querySelector('.r-input[placeholder="Your Name"]').value.trim();
+  if(!name){showToast('⚠️ Please enter your name','#e63946');return;}
+  showToast('🍽️ Reservation confirmed! We will see you soon, '+name+'.');
+}
+
+function handleSubscribe(e){
+  e.preventDefault();
+  var input=document.querySelector('.k-nl-input');
+  if(!input.value.trim()){showToast('⚠️ Please enter your email','#e63946');return;}
+  input.value='';
+  showToast('🥐 Subscribed! Fresh updates every week.');
+}
+
+var cartCount=0;
+function addToCart(btn){
+  cartCount++;
+  var name=btn.closest('.k-product').querySelector('.k-product-name').textContent;
+  showToast('🛒 Added: '+name+' ('+cartCount+' item'+(cartCount>1?'s':'')+' in cart)','#d4845a');
+}
+
 function toggleDrawer(id){
   var d=document.getElementById(id);
   d.classList.toggle('open');
